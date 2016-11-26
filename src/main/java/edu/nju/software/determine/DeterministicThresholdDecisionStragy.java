@@ -1,23 +1,35 @@
 package edu.nju.software.determine;
 
-public class DeterministicThresholdDecisionStragy extends AgentDetermineStragy{
-	
-	private double threshold;
-	
-	public DeterministicThresholdDecisionStragy(double threshold)
-	{
-		this.threshold=threshold;
+import edu.nju.software.Agent;
+
+public class DeterministicThresholdDecisionStragy implements AgentDetermineStragy{
+
+	private double sensor = 0.0;
+
+	public void diffusePerception(double agentWeight, double edgeWeight, double output) {
+		sensor += agentWeight*edgeWeight*output;
 	}
-	
-	@Override
-	public double determine(double[] stragy, double[] weight, double[] degree) 
-	{
-		double diffusionSensor = this.diffusionSensor(stragy, weight, degree);
-		if(diffusionSensor>=threshold){
-			return diffusionSensor;
-		}else{
-			return 0;
-		}		
+
+	public double determine(Agent agent) {
+		return 0;
 	}
+
+//	private double threshold;
+//
+//	public DeterministicThresholdDecisionStragy(double threshold)
+//	{
+//		this.threshold=threshold;
+//	}
+//
+//	@Override
+//	public double determine(double[] stragy, double[] weight, double[] degree)
+//	{
+//		double diffusionSensor = this.diffusionSensor(stragy, weight, degree);
+//		if(diffusionSensor>=threshold){
+//			return diffusionSensor;
+//		}else{
+//			return 0;
+//		}
+//	}
 
 }
