@@ -72,7 +72,10 @@ public class Network {
     }
 
     private void showNetworkStatus(){
-
+        System.out.println("第"+diffusionRound+"轮开始：");
+        for(Agent agent:this.activedAgents){
+            System.out.println("编号为："+agent.getId()+"的agent本轮后被激活");
+        }
     }
 
 

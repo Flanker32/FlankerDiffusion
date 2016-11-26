@@ -21,21 +21,23 @@ public class Agent {
     private int outDegree = 0;
     private double weight = 0.0;
     private double threshold = 0.0;
+    private double probablity = 0.0;
+    private double output = 0.0;
     private AgentDetermineStragy agentDetermineStragy = null;
     private HashMap<Agent,Double> frontAgent = new HashMap<Agent, Double>();
     private HashMap<Agent,Double> afterAgent = new HashMap<Agent, Double>();
 
-    public Agent(int id, boolean isActived, AgentDetermineStragy agentDetermineStragy){
+    public Agent(int id, AgentDetermineStragy agentDetermineStragy){
         this.id=id;
-        this.isActived=isActived;
         this.agentDetermineStragy = agentDetermineStragy;
 
+        this.probablity = Util.generagePositiveNormalValue(0.5,1);
         this.weight = Util.generageNormalValue(DEFAULT_WEIGHT_MEAN, DEFAULT_WEIGHT_VARIANCE);
         this.threshold = Util.generageNormalValue(DEFAULT_THRESHOLD_MEAN, DEFAULT_THRESHOLD_VARIANCE);
     }
 
-    public Agent(int id,boolean isActived,AgentDetermineStragy agentDetermineStragy,double weight,double threshold){
-        this(id,isActived,agentDetermineStragy);
+    public Agent(int id,AgentDetermineStragy agentDetermineStragy,double weight,double threshold){
+        this(id,agentDetermineStragy);
         this.weight=weight;
         this.threshold=threshold;
     }
@@ -53,17 +55,26 @@ public class Agent {
     }
 
     public boolean diffusePerception(double agentWeight,double edgeWeight,double output){
+        this.agentDetermineStragy.diffusePerception(agentWeight,edgeWeight,output);
         return true;
     }
 
     public boolean diffusionJudgement()
     {
-        return true;
+        output = agentDetermineStragy.determine(this);
+        if(output<=0||isActived){
+            return false;
+        }else{
+            return true;
+        }
     }
 
     public boolean diffuse()
     {
-
+        for(Agent agent:afterAgent.keySet()){
+            agent.diffusePerception(this.weight,afterAgent.get(agent),output);
+        }
+        this.isActived=true;
         return true;
     }
 
@@ -103,5 +114,9 @@ public class Agent {
 
     public HashMap<Agent, Double> getFrontAgent() {
         return frontAgent;
+    }
+
+    public double getProbablity() {
+        return probablity;
     }
 }
