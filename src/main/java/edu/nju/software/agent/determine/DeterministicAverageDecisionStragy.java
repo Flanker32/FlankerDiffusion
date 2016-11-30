@@ -1,10 +1,8 @@
-package edu.nju.software.determine;
+package edu.nju.software.agent.determine;
 
-import edu.nju.software.Agent;
+import edu.nju.software.agent.Agent;
 
 import java.util.HashMap;
-import java.util.List;
-import java.util.Set;
 
 public class DeterministicAverageDecisionStragy implements AgentDetermineStragy {
 

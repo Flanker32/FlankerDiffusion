@@ -1,4 +1,6 @@
-package edu.nju.software;
+package edu.nju.software.network;
+
+import edu.nju.software.agent.Agent;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -48,7 +50,7 @@ public class Network {
         }
     }
 
-    private boolean checkAllPoints(){
+    protected boolean checkAllPoints(){
         activedAgents.clear();
         for(Agent agent:agents.values())
         {
@@ -64,14 +66,14 @@ public class Network {
         }
     }
 
-    private void diffusionNewRound(){
+    protected void diffusionNewRound(){
         diffusionRound++;
         for(Agent agent:activedAgents){
             agent.diffuse();
         }
     }
 
-    private void showNetworkStatus(){
+    protected void showNetworkStatus(){
         System.out.println("第"+diffusionRound+"轮开始：");
         for(Agent agent:this.activedAgents){
             System.out.println("编号为："+agent.getId()+"的agent本轮后被激活");

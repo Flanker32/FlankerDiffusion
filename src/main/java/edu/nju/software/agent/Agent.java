@@ -1,6 +1,7 @@
-package edu.nju.software;
+package edu.nju.software.agent;
 
-import edu.nju.software.determine.AgentDetermineStragy;
+import edu.nju.software.Util;
+import edu.nju.software.agent.determine.AgentDetermineStragy;
 
 import java.util.HashMap;
 
@@ -21,7 +22,6 @@ public class Agent {
     private int outDegree = 0;
     private double weight = 0.0;
     private double threshold = 0.0;
-    private double probablity = 0.0;
     private double output = 0.0;
     private AgentDetermineStragy agentDetermineStragy = null;
     private HashMap<Agent,Double> frontAgent = new HashMap<Agent, Double>();
@@ -31,7 +31,6 @@ public class Agent {
         this.id=id;
         this.agentDetermineStragy = agentDetermineStragy;
 
-        this.probablity = Util.generagePositiveNormalValue(0.5,1);
         this.weight = Util.generageNormalValue(DEFAULT_WEIGHT_MEAN, DEFAULT_WEIGHT_VARIANCE);
         this.threshold = Util.generageNormalValue(DEFAULT_THRESHOLD_MEAN, DEFAULT_THRESHOLD_VARIANCE);
     }
@@ -116,7 +115,4 @@ public class Agent {
         return frontAgent;
     }
 
-    public double getProbablity() {
-        return probablity;
-    }
 }

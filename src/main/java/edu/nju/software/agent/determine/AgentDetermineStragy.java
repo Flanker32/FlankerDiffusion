@@ -1,6 +1,6 @@
-package edu.nju.software.determine;
+package edu.nju.software.agent.determine;
 
-import edu.nju.software.Agent;
+import edu.nju.software.agent.Agent;
 
 public interface  AgentDetermineStragy {
 

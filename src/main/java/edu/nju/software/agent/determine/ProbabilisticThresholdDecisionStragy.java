@@ -1,15 +1,17 @@
-package edu.nju.software.determine;
+package edu.nju.software.agent.determine;
 
-import edu.nju.software.Agent;
+import edu.nju.software.agent.Agent;
 
 public class ProbabilisticThresholdDecisionStragy implements AgentDetermineStragy{
 
 	private boolean binary = false;
 	private double value = 0.0;
 	private double sensor = 0.0;
+    private double probablity = 0.0;
 
-	public ProbabilisticThresholdDecisionStragy(boolean binary){
-		this.binary=binary;
+	public ProbabilisticThresholdDecisionStragy(boolean binary,double probablity){
+		this.probablity=probablity;
+	    this.binary=binary;
 	}
 
 
@@ -19,7 +21,6 @@ public class ProbabilisticThresholdDecisionStragy implements AgentDetermineStrag
 
 	public double determine(Agent agent) {
 		double result = 0.0;
-		double probablity = agent.getProbablity();
 		double threshold = agent.getThreshold();
 
 		if((sensor>=threshold)&&(Math.random()<probablity)){
