@@ -8,6 +8,7 @@ import java.util.List;
  * Created by Dell on 2016/11/30.
  */
 public class IOHelper {
+
     public static List<String> readFileByLine(String name){
         List<String> result = new ArrayList<String>();
 

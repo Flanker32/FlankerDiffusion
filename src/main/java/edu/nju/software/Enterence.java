@@ -34,22 +34,7 @@ public class Enterence {
         List<String> nodes  = IOHelper.readFileByLine("regular_nodes.txt");
         List<String> edges  = IOHelper.readFileByLine("regular_edges.txt");
 
-        for(String s:nodes){
-            String[] temple = s.split(",");
-            int id = Integer.valueOf(temple[0]);
-            int weight = Integer.valueOf(temple[1]);
-            int threshold = Integer.valueOf(temple[2]);
-            //Agent agent = new Agent(id,new DeterministicThresholdDecisionStragy(true),weight,threshold);
-            Agent agent = new Agent(id,new ProbabilisticAverageDecisionStragy(false),weight,threshold);
-            network.addAgent(agent);
-        }
-        for(String s:edges){
-            String[] temple = s.split(",");
-            int start = Integer.valueOf(temple[0]);
-            int end = Integer.valueOf(temple[1]);
-            int weight = Integer.valueOf(temple[2]);
-            network.addEdge(start,end,weight);
-        }
+
 
         int[] list = {0,1};
         network.startDiffusion(list,10,100);
