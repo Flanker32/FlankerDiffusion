@@ -12,6 +12,7 @@ import java.util.List;
 public class Network {
 
     private int diffusionRound = 0;
+    private int activedAgentNumber = 0;
     HashMap<Integer,Agent> agents = new HashMap<Integer, Agent>();
     List<Agent> activedAgents = new ArrayList<Agent>();
 
@@ -48,6 +49,8 @@ public class Network {
             diffusionNewRound();
             showNetworkStatus();
         }
+        System.out.println("扩散结束，扩散轮数"+diffusionRound+"扩散节点数"+ activedAgentNumber +"//"+agents.size());
+        clear();
     }
 
     protected boolean checkAllPoints(){
@@ -74,10 +77,16 @@ public class Network {
     }
 
     protected void showNetworkStatus(){
-        System.out.println("第"+diffusionRound+"轮开始：");
-        for(Agent agent:this.activedAgents){
-            System.out.println("编号为："+agent.getId()+"的agent本轮后被激活");
-        }
+        System.out.println("第"+diffusionRound+"轮扩散：新激活节点"+activedAgents.size());
+//        for(Agent agent:this.activedAgents){
+//            System.out.println("编号为："+agent.getId()+"的agent本轮后被激活");
+//        }
+    }
+
+    protected void clear(){
+        this.diffusionRound=0;
+        this.activedAgentNumber =0;
+        this.activedAgents.clear();
     }
 
 
