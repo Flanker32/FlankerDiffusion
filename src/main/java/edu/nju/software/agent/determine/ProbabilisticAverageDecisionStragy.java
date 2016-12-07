@@ -34,6 +34,8 @@ public class ProbabilisticAverageDecisionStragy implements AgentDetermineStragy 
         }else{
             result = 0.0;
         }
+        value=0;
+        sensor=0;
         return result;
     }
 

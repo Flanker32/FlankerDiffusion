@@ -34,6 +34,7 @@ public class ProbabilisticThresholdDecisionStragy implements AgentDetermineStrag
 				result = value;
 			}
 		}
+		value=0;
 		sensor=0;
 		return result;
 	}
