@@ -86,6 +86,11 @@ public class Agent {
         return true;
     }
 
+    public void clear(){
+        this.isActived=false;
+        this.output=0.0;
+    }
+
 
     public int getId() {
         return id;

@@ -11,11 +11,15 @@ public class ProbabilisticThresholdDecisionStragy implements AgentDetermineStrag
 
 	public ProbabilisticThresholdDecisionStragy(boolean binary,double probablity){
 		this.probablity=probablity;
+
 	    this.binary=binary;
 	}
 
 
 	public void diffusePerception(double agentWeight, double edgeWeight, double output) {
+		if(output>value){
+			value=output;
+		}
 		sensor += agentWeight*edgeWeight*output;
 	}
 

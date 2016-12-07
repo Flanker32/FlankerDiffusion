@@ -13,7 +13,9 @@ public class DeterministicThresholdDecisionStragy implements AgentDetermineStrag
 	}
 
 	public void diffusePerception(double agentWeight, double edgeWeight, double output) {
-		value=output;
+		if(output>value){
+			value=output;
+		}
 		sensor += agentWeight*edgeWeight*output;
 	}
 

@@ -44,6 +44,7 @@ public class AgentFactory {
 
     public static Agent newProThrAgent(int id, double weight, double threshold, boolean isBinary) {
         double probablity = Math.random();
+
         return new Agent(id, new ProbabilisticThresholdDecisionStragy(isBinary, probablity), weight, threshold);
     }
 
