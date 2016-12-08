@@ -1,4 +1,6 @@
-package edu.nju.software.network;
+package edu.nju.software.experiment;
+
+import edu.nju.software.network.Network;
 
 /**
  * Created by Dell on 2016/12/7.
