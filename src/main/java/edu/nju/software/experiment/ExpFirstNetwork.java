@@ -1,5 +1,6 @@
 package edu.nju.software.experiment;
 
+import edu.nju.software.bean.DiffusionResult;
 import edu.nju.software.network.Network;
 
 /**
@@ -19,8 +20,8 @@ public class ExpFirstNetwork {
         int [] activedNumbers = new int[size];
 
         for(int i=0;i<terms;i++){
-            network.startDiffusion(startPoints,startValue,diffusionRound);
-            boolean[] temp = network.getAgentStatus();
+            DiffusionResult diffusionResult = network.startDiffusion(startPoints,startValue,diffusionRound);
+            boolean[] temp = diffusionResult.getAgentStatus();
             for(int j=0;j<size;j++){
                 if(temp[j]){
                     activedNumbers[j]++;

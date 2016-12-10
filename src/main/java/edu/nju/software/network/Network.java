@@ -1,6 +1,7 @@
 package edu.nju.software.network;
 
 import edu.nju.software.agent.Agent;
+import edu.nju.software.bean.DiffusionResult;
 
 import java.util.*;
 
@@ -9,6 +10,7 @@ import java.util.*;
  */
 public class Network {
 
+    private int edgeCount = 0;
     private int diffusionRound = 0;
     private int activedAgentNumber = 0;
     HashMap<Integer, Agent> agents = new HashMap<Integer, Agent>();
@@ -29,46 +31,60 @@ public class Network {
         }
         start.addConnectionAsStart(end, weight);
         end.addConnectionAsEnd(start, weight);
+        this.edgeCount++;
         return true;
     }
 
-    public void startDiffusion(int[] startAgents, double startvalue, int round) {
+    public DiffusionResult startDiffusion(int[] startAgents, double startvalue, int round) {
         // 第一轮传播
+        int agentCount = getSize();
+        DiffusionResult diffusionResult = new DiffusionResult(agentCount, edgeCount, round);
+        diffusionResult.setDiffusionRound(round);// set diffusion round max at first.
+
         finalActivedAgents = new boolean[agents.size()];
         for (int agentId : startAgents) {
             agents.get(agentId).diffuseFirstTime(startvalue);
         }
 
-        for (int i = 0; i < round; i++) {
-            boolean check = checkAllPoints();
-            if (!check) {
+        for (int i = 1; i <= round; i++) {
+            List<Agent> activedAgents = getActivedAgents();
+            if (activedAgents.size() == 0) {
+                diffusionResult.setDiffusionRound(i - 1);
+                diffusionResult.setAffectedAgentCount(activedAgentNumber);
                 break;
+            } else {
+                diffusionResult.setDiffusePerTerm(i, activedAgents.size());
+                diffusionNewRound(activedAgents);
+                showNetworkStatus();
             }
-            diffusionNewRound();
-            showNetworkStatus();
         }
+        // record every agents' status
+        boolean[] finalActivedAgents = new boolean[agentCount];
+        int count = 0;
+        for (Agent agent : agents.values()) {
+            finalActivedAgents[count++] = agent.isActived();
+        }
+        diffusionResult.setAgentStatus(finalActivedAgents);
+
         clear();
+        return diffusionResult;
     }
 
-    protected boolean checkAllPoints() {
-        activedAgents.clear();
+    protected List<Agent> getActivedAgents() {
+        List<Agent> result = new ArrayList<Agent>();
         for (Agent agent : agents.values()) {
-            boolean result = agent.diffusionJudgement();
-            if (result) {
-                activedAgents.add(agent);
+            boolean temp = agent.diffusionJudgement();
+            if (temp) {
+                result.add(agent);
                 activedAgentNumber++;
             }
         }
-        if (activedAgents.size() == 0) {
-            return false;
-        } else {
-            return true;
-        }
+        return result;
     }
 
-    protected void diffusionNewRound() {
+    protected void diffusionNewRound(List<Agent> agents) {
         diffusionRound++;
-        for (Agent agent : activedAgents) {
+        for (Agent agent : agents) {
             agent.diffuse();
         }
     }
@@ -81,23 +97,16 @@ public class Network {
     }
 
     protected void clear() {
-
-        int count = 0;
-        for (Agent agent : agents.values()) {
-            finalActivedAgents[count++] = agent.isActived();
-        }
-
         System.out.println("扩散结束，扩散轮数" + diffusionRound + "扩散节点数" + activedAgentNumber + "/" + agents.size());
-
         this.diffusionRound = 0;
         this.activedAgentNumber = 0;
         this.activedAgents.clear();
-        for(Agent agent:agents.values()){
+        for (Agent agent : agents.values()) {
             agent.clear();
         }
     }
 
-    public int getSize(){
+    public int getSize() {
         return agents.size();
     }
 
@@ -123,10 +132,10 @@ public class Network {
         public int compare(Object o1, Object o2) {
             Agent first = (Agent) o1;
             Agent second = (Agent) o2;
-            double result = calDistance(first,sample)-calDistance(second,sample);
-            if(result>0){
+            double result = calDistance(first, sample) - calDistance(second, sample);
+            if (result > 0) {
                 return -1;
-            }else{
+            } else {
                 return 1;
             }
         }
