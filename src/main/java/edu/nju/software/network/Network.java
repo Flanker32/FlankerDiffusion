@@ -14,7 +14,7 @@ public class Network {
     private int diffusionRound = 0;
     private int activedAgentNumber = 0;
     HashMap<Integer, Agent> agents = new HashMap<Integer, Agent>();
-    List<Agent> activedAgents = new ArrayList<Agent>();
+//    List<Agent> activedAgents = new ArrayList<Agent>();
     boolean[] finalActivedAgents;
 
     public boolean addAgent(Agent agent) {
@@ -53,9 +53,9 @@ public class Network {
                 diffusionResult.setAffectedAgentCount(activedAgentNumber);
                 break;
             } else {
-                diffusionResult.setDiffusePerTerm(i, activedAgents.size());
+                diffusionResult.setDiffusePerTerm(i-1, activedAgents.size());
                 diffusionNewRound(activedAgents);
-                showNetworkStatus();
+                showNetworkStatus(activedAgents);
             }
         }
         // record every agents' status
@@ -89,8 +89,8 @@ public class Network {
         }
     }
 
-    protected void showNetworkStatus() {
-        //System.out.println("第"+diffusionRound+"轮扩散：新激活节点"+activedAgents.size());
+    protected void showNetworkStatus(List<Agent> activedAgents) {
+        System.out.println("第"+diffusionRound+"轮扩散：新激活节点"+activedAgents.size());
 //        for(Agent agent:this.activedAgents){
 //            System.out.println("编号为："+agent.getId()+"的agent本轮后被激活");
 //        }
@@ -100,7 +100,7 @@ public class Network {
         System.out.println("扩散结束，扩散轮数" + diffusionRound + "扩散节点数" + activedAgentNumber + "/" + agents.size());
         this.diffusionRound = 0;
         this.activedAgentNumber = 0;
-        this.activedAgents.clear();
+//        this.activedAgents.clear();
         for (Agent agent : agents.values()) {
             agent.clear();
         }

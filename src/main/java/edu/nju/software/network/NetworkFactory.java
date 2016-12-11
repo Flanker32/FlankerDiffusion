@@ -17,6 +17,10 @@ public class NetworkFactory {
         return null;
     }
 
+    public static Network readNetworkFromFile(String nodeFile, String edgeFile,NetworkParameter networkParameter){
+        return readNetworkFromFile(nodeFile,edgeFile,networkParameter.isBinary(),networkParameter.getStrategyType());
+    }
+
     public static Network readNetworkFromFile(String nodeFile, String edgeFile, boolean isBinary, StrategyType type) {
         Network network = new Network();
 

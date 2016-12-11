@@ -30,7 +30,7 @@ public class IOHelper {
         return result;
     }
 
-    public boolean writeToFile(String fileName, List<String> information) {
+    public static boolean writeToFile(String fileName, List<String> information) {
         File file = new File(fileName);
         try {
             if (!file.exists()) {
@@ -41,7 +41,11 @@ public class IOHelper {
             BufferedWriter bufferedWriter = new BufferedWriter(osw);
             for(String s:information){
                 bufferedWriter.write(s);
+                bufferedWriter.newLine();
             }
+            bufferedWriter.close();
+            osw.close();
+            fis.close();
         } catch (FileNotFoundException e) {
             e.printStackTrace();
             return false;
