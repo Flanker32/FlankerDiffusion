@@ -10,6 +10,9 @@ public class AgentData {
     private double threshold;
     private double weight;
 
+    public AgentData() {
+    }
+
     public AgentData(int id, double threshold, double weight) {
         this.id = id;
         this.threshold = threshold;

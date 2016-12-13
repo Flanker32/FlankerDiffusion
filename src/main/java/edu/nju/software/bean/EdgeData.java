@@ -8,6 +8,9 @@ public class EdgeData {
     private int end;
     private double weight;
 
+    public EdgeData() {
+    }
+
     public EdgeData(int start, int end, double weight) {
         this.start = start;
         this.end = end;

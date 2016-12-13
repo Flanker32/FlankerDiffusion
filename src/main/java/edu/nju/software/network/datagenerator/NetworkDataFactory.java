@@ -2,6 +2,7 @@ package edu.nju.software.network.datagenerator;
 
 import edu.nju.software.Util;
 import edu.nju.software.bean.AgentData;
+import edu.nju.software.bean.EdgeData;
 import edu.nju.software.bean.NetworkData;
 import edu.nju.software.bean.NetworkParameter;
 import edu.nju.software.network.NetworkType;
@@ -22,11 +23,13 @@ import java.util.Random;
  */
 public class NetworkDataFactory {
 
-    static final int LEVEL_ONE = 1;
-    static final int LEVEL_TWO = 2;
-    static final int LEVEL_THREE = 3;
-    static final int LEVEL_FOUR = 4;
-    static final int LEVEL_FIVE = 5;
+    private static final int LEVEL_ONE = 1;
+    private static final int LEVEL_TWO = 2;
+    private static final int LEVEL_THREE = 3;
+    private static final int LEVEL_FOUR = 4;
+    private static final int LEVEL_FIVE = 5;
+    private static final double  probability = 0.5;
+    private static Random ra = new Random();
 
     public static NetworkData generate(NetworkParameter networkParameter){
         NetworkType type = networkParameter.getNetworkType();
@@ -51,12 +54,11 @@ public class NetworkDataFactory {
             default:
                 return null;
         }
+        List<EdgeData> edges = generateEdges(networkGraph);
+        List<AgentData> agents = generateAgents(networkGraph);
 
-        return null;
+        return new NetworkData(agents,edges);
     }
-
-
-    private static Random ra = new Random();
 
     static double createVertexThreshold(){
         return Util.generagePositiveNormalValue(0.5, 1);
@@ -124,7 +126,7 @@ public class NetworkDataFactory {
         }
     }
 
-    static List<AgentData> handle(Graph network, String netLable) {
+    static List<AgentData> generateAgents(Graph network) {
         //handle vertex
         Collection<Integer> vertices = network.getVertices();
         List<AgentData> agentDatas = new ArrayList<AgentData>();
@@ -144,58 +146,32 @@ public class NetworkDataFactory {
         return agentDatas;
     }
 
-
-    {
-        File xmlFileVertex = new File(netLable+"_vertices.xml");
-        try{
-            FileOutputStream ofs = new FileOutputStream(xmlFileVertex);
-            XmlSerialize<Vertex> xmlSerialize = new XmlSerialize<Vertex>();
-            xmlSerialize.serializeMultipleObject(ofs,vertexList);
-        }catch(FileNotFoundException e)  {
-            e.printStackTrace();
-        }catch(IOException e)  {
-            e.printStackTrace();
-        }
+    static List<EdgeData> generateEdges(Graph network) {
         //handle edge
         Collection<Integer> edges = network.getEdges();
-        List<Edge> edgeList = new ArrayList<Edge>();
-        //System.out.println("NumEdges:"+network.getEdgeCount());
-        //System.out.println("NumVertices:"+network.getVertexCount());
+        List<EdgeData> edgeList = new ArrayList<EdgeData>();
+
         for (Integer e : edges) {
             Pair edgeEndpoints = network.getEndpoints(e);
-            //System.out.println(edgeEndpoints);
             Object firstElement = edgeEndpoints.getFirst();
             Object secondElement = edgeEndpoints.getSecond();
-            //System.out.println(firstElement.toString()+"��������"+secondElement);
-            //System.out.println(Integer.parseInt(firstElement.toString())+"/"+Integer.parseInt(secondElement.toString()));
-            Random ra = new Random();
-            double  probability = 0.5;
-            double random = ra.nextDouble();
-            double edgeWeight;
-            edgeWeight = ra.nextDouble()*(10-1)+1; //the weight of edge
-            Edge edge;
+
+            double random = Math.random();
+            double edgeWeight=Math.random()*(10-1)+1; //the weight of edge
+            EdgeData edge = null;
             if(random<probability){
-                edge = new Edge();
-                edge.setBeginNode(Integer.parseInt(firstElement.toString()));
-                edge.setEndNode(Integer.parseInt(secondElement.toString()));
+                edge= new EdgeData();
+                edge.setStart(Integer.parseInt(firstElement.toString()));
+                edge.setEnd(Integer.parseInt(secondElement.toString()));
                 edge.setWeight(edgeWeight);
             }else{
-                edge = new Edge();
-                edge.setEndNode(Integer.parseInt(firstElement.toString()));
-                edge.setBeginNode(Integer.parseInt(secondElement.toString()));
+                edge = new EdgeData();
+                edge.setStart(Integer.parseInt(firstElement.toString()));
+                edge.setEnd(Integer.parseInt(secondElement.toString()));
                 edge.setWeight(edgeWeight);
             }
             edgeList.add(edge);
         }
-        File xmlFileEdge = new File(netLable+"_edges.xml");
-        try{
-            FileOutputStream ofs = new FileOutputStream(xmlFileEdge);
-            XmlSerialize<Edge> xmlSerialize = new XmlSerialize<Edge>();
-            xmlSerialize.serializeMultipleObject(ofs,edgeList);
-        }catch(FileNotFoundException e)  {
-            e.printStackTrace();
-        }catch(IOException e)  {
-            e.printStackTrace();
-        }
+        return edgeList;
     }
 }

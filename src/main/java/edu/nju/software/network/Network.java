@@ -14,7 +14,6 @@ public class Network {
     private int diffusionRound = 0;
     private int activedAgentNumber = 0;
     HashMap<Integer, Agent> agents = new HashMap<Integer, Agent>();
-//    List<Agent> activedAgents = new ArrayList<Agent>();
     boolean[] finalActivedAgents;
 
     public boolean addAgent(Agent agent) {
@@ -22,7 +21,7 @@ public class Network {
         return true;
     }
 
-    public boolean addEdge(int first, int second, int weight) {
+    public boolean addEdge(int first, int second, double weight) {
         Agent start = agents.get(first);
         Agent end = agents.get(second);
 
@@ -43,7 +42,10 @@ public class Network {
 
         finalActivedAgents = new boolean[agents.size()];
         for (int agentId : startAgents) {
-            agents.get(agentId).diffuseFirstTime(startvalue);
+            Agent agent = agents.get(agentId);
+            if(agent!=null){
+                agent.diffuseFirstTime(startvalue);
+            }
         }
 
         for (int i = 1; i <= round; i++) {
@@ -100,7 +102,6 @@ public class Network {
         System.out.println("扩散结束，扩散轮数" + diffusionRound + "扩散节点数" + activedAgentNumber + "/" + agents.size());
         this.diffusionRound = 0;
         this.activedAgentNumber = 0;
-//        this.activedAgents.clear();
         for (Agent agent : agents.values()) {
             agent.clear();
         }

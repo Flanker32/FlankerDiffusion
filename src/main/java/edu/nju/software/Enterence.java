@@ -5,6 +5,7 @@ import edu.nju.software.bean.NetworkParameter;
 import edu.nju.software.experiment.DiffusionSpeedExperiment;
 import edu.nju.software.network.Network;
 import edu.nju.software.network.NetworkFactory;
+import edu.nju.software.network.NetworkType;
 
 import java.util.HashSet;
 
@@ -88,18 +89,27 @@ public class Enterence {
 //    }
 
     public static void main(String[] args){
-        NetworkParameter dtParameter = new NetworkParameter(StrategyType.DetThr,false);
-        NetworkParameter daParameter = new NetworkParameter(StrategyType.DetAvg,false);
-        NetworkParameter ptParameter = new NetworkParameter(StrategyType.ProThr,false);
-        NetworkParameter paParameter = new NetworkParameter(StrategyType.ProAvg,false);
-        DiffusionSpeedExperiment experiment1 = new DiffusionSpeedExperiment(dtParameter,"DetThr.txt");
-        DiffusionSpeedExperiment experiment2 = new DiffusionSpeedExperiment(daParameter,"DetAvg.txt");
-        DiffusionSpeedExperiment experiment3 = new DiffusionSpeedExperiment(ptParameter,"ProThr.txt");
-        DiffusionSpeedExperiment experiment4 = new DiffusionSpeedExperiment(paParameter,"ProAvg.txt");
-        experiment2.diffusionExperiment(0.1,10,100);
-        experiment3.diffusionExperiment(0.1,10,100);
-        experiment4.diffusionExperiment(0.1,10,100);
-        experiment1.diffusionExperiment(0.1,10,100);
+//        NetworkParameter dtParameter = new NetworkParameter(StrategyType.DetThr,false);
+//        NetworkParameter daParameter = new NetworkParameter(StrategyType.DetAvg,false);
+//        NetworkParameter ptParameter = new NetworkParameter(StrategyType.ProThr,false);
+//        NetworkParameter paParameter = new NetworkParameter(StrategyType.ProAvg,false);
+//        DiffusionSpeedExperiment experiment1 = new DiffusionSpeedExperiment(dtParameter,"DetThr.txt");
+//        DiffusionSpeedExperiment experiment2 = new DiffusionSpeedExperiment(daParameter,"DetAvg.txt");
+//        DiffusionSpeedExperiment experiment3 = new DiffusionSpeedExperiment(ptParameter,"ProThr.txt");
+//        DiffusionSpeedExperiment experiment4 = new DiffusionSpeedExperiment(paParameter,"ProAvg.txt");
+//        experiment2.diffusionExperiment(0.1,10,100);
+//        experiment3.diffusionExperiment(0.1,10,100);
+//        experiment4.diffusionExperiment(0.1,10,100);
+//        experiment1.diffusionExperiment(0.1,10,100);
+        NetworkParameter networkParameter = new NetworkParameter();
+        networkParameter.setBinary(false);
+        networkParameter.setAgentNumber(10000);
+        networkParameter.setEdgeNumber(50000);
+        networkParameter.setNetworkType(NetworkType.SmallWorld);
+        networkParameter.setStrategyType(StrategyType.ProAvg);
+        Network test = NetworkFactory.generateNetwork(networkParameter);
+        int[] startList = Util.getStartAgents(10000,0.01);
+        test.startDiffusion(startList,10,100);
     }
 
 
