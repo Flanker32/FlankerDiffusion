@@ -106,10 +106,25 @@ public class Enterence {
         networkParameter.setAgentNumber(10000);
         networkParameter.setEdgeNumber(50000);
         networkParameter.setNetworkType(NetworkType.SmallWorld);
-        networkParameter.setStrategyType(StrategyType.ProAvg);
-        Network test = NetworkFactory.generateNetwork(networkParameter);
+        networkParameter.setStrategyType(StrategyType.DetThr);
+
+        Network smallworld = NetworkFactory.generateNetwork(networkParameter);
+        networkParameter.setNetworkType(NetworkType.Regular);
+        Network regular = NetworkFactory.generateNetwork(networkParameter);
+        networkParameter.setNetworkType(NetworkType.Random);
+        Network random = NetworkFactory.generateNetwork(networkParameter);
+        networkParameter.setNetworkType(NetworkType.ScaleFree);
+        Network scalefree = NetworkFactory.generateNetwork(networkParameter);
         int[] startList = Util.getStartAgents(10000,0.01);
-        test.startDiffusion(startList,10,100);
+
+        System.out.println("smallworld diffusion!");
+        smallworld.startDiffusion(startList,10,100);
+        System.out.println("regular diffusion!");
+        regular.startDiffusion(startList,10,100);
+        System.out.println("random diffusion!");
+        random.startDiffusion(startList,10,100);
+        System.out.println("scalefree diffusion!");
+        scalefree.startDiffusion(startList,10,100);
     }
 
 
