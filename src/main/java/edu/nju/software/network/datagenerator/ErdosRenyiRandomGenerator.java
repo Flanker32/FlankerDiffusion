@@ -1,5 +1,6 @@
 package edu.nju.software.network.datagenerator;
 
+import edu.nju.software.bean.NetworkParameter;
 import org.apache.commons.collections15.Factory;
 
 import edu.uci.ics.jung.algorithms.generators.random.ErdosRenyiGenerator;
@@ -11,11 +12,17 @@ public class ErdosRenyiRandomGenerator {
 	private double probability;
 	static int vi = 1;
 	static int ei = 1;
+
+	public ErdosRenyiRandomGenerator(NetworkParameter networkParameter){
+		this.vertexCount = networkParameter.getAgentNumber();
+		this.probability = networkParameter.getEdgeNumber()/Math.pow(networkParameter.getAgentNumber(),2);
+	}
+
 	public ErdosRenyiRandomGenerator(int vertexCount, double probability) {
 		this.vertexCount = vertexCount;
 		this.probability = probability;
 	}
-	public void generate(){
+	public Graph generate(){
 		Factory<UndirectedSparseGraph<Integer, Integer>> graphFactory;
 		graphFactory = new Factory<UndirectedSparseGraph<Integer, Integer>>() {
 			public UndirectedSparseGraph<Integer, Integer> create() {
@@ -37,8 +44,8 @@ public class ErdosRenyiRandomGenerator {
 		ErdosRenyiGenerator erRandom = new ErdosRenyiGenerator(graphFactory,vertexFactory,edgeFactory,vertexCount,probability);
 		
 		Graph network = erRandom.create();
-		
-		Processor.handle(network,"ErdosRenyiRandom");
+		return network;
+//		Processor.handle(network,"ErdosRenyiRandom");
 		
 	}
 }

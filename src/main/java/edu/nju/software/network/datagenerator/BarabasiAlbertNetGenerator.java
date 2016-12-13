@@ -3,6 +3,7 @@ package edu.nju.software.network.datagenerator;
 import java.util.HashSet;
 import java.util.Set;
 
+import edu.nju.software.bean.NetworkParameter;
 import org.apache.commons.collections15.Factory;
 
 import edu.uci.ics.jung.algorithms.generators.random.BarabasiAlbertGenerator;
@@ -16,13 +17,19 @@ public class BarabasiAlbertNetGenerator {
     static int vi = 1;
     static int ei = 1;
 
+    public BarabasiAlbertNetGenerator(NetworkParameter networkParameter){
+        this.vertexCount = networkParameter.getAgentNumber();
+        this.init_vertices = (int)((Math.random()*vertexCount)/2);
+        this.numEdgesToAttach=networkParameter.getEdgeNumber()/(vertexCount-init_vertices);
+    }
+
     public BarabasiAlbertNetGenerator(int vertexCount, int init_vertices, int numEdgesToAttach) {
         this.vertexCount = vertexCount;
         this.init_vertices = init_vertices;
         this.numEdgesToAttach = numEdgesToAttach;
     }
 
-    public void generate() {
+    public Graph generate() {
         Factory<SparseGraph<Integer, Integer>> graphFactory;
         graphFactory = new Factory<SparseGraph<Integer, Integer>>() {
             public SparseGraph<Integer, Integer> create() {
@@ -46,7 +53,8 @@ public class BarabasiAlbertNetGenerator {
         ba.evolveGraph(vertexCount - init_vertices);
         Graph network = ba.create();
         //System.out.println(seedVertices);
-        Processor.handle(network, "BarabasiAlbertNet");
+//        Processor.handle(network, "BarabasiAlbertNet");
+        return network;
     }
 
 }

@@ -6,9 +6,11 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Random;
 
+import edu.nju.software.Util;
 import edu.uci.ics.jung.graph.Graph;
 import edu.uci.ics.jung.graph.util.Pair;
 
@@ -22,7 +24,8 @@ public class Processor {
 	private static Random ra = new Random();
 	
 	static double createVertexThreshold(){
-		return ra.nextGaussian();
+		return Util.generagePositiveNormalValue(0.5, 1);
+		//return ra.nextGaussian();
 	}
 	static void createVertexWeight(int vertexCount,double [] weightArray){
 	
@@ -60,6 +63,7 @@ public class Processor {
 			weightArray[randomLThree-1] = LEVEL_THREE;
 		}
 	}
+
 	static void handle(Graph network, String netLable){
 		//handle vertex
 		Collection<Integer> vertices = network.getVertices();
@@ -69,7 +73,7 @@ public class Processor {
 		//System.out.println(netLable); //print the name of network
 		for (Integer v : vertices) {
 			//System.out.println(v); // print the vertex
-			double threshold = createVertexThreshold();
+			double threshold = createVertexThreshold(); //the threshold of vertex
 			double weight = weightArray[v.intValue()-1];
 			//conduct a new Vertex object
 			Vertex vertex = new Vertex();
@@ -104,7 +108,7 @@ public class Processor {
 			double  probability = 0.5;
 			double random = ra.nextDouble();
 			double edgeWeight;
-			edgeWeight = ra.nextDouble()*(10-1)+1;
+			edgeWeight = ra.nextDouble()*(10-1)+1; //the weight of edge
 			Edge edge;
 			if(random<probability){
 				edge = new Edge();

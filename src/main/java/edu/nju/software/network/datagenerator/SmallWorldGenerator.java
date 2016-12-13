@@ -1,5 +1,6 @@
 package edu.nju.software.network.datagenerator;
 
+import edu.nju.software.bean.NetworkParameter;
 import org.apache.commons.collections15.Factory;
 
 import edu.uci.ics.jung.algorithms.generators.random.KleinbergSmallWorldGenerator;
@@ -15,8 +16,15 @@ public class SmallWorldGenerator {
 	public SmallWorldGenerator(int vertexCount){
 		this.vertexCount = vertexCount;
 	}
+
+	public SmallWorldGenerator(NetworkParameter networkParameter){
+		this.vertexCount = networkParameter.getAgentNumber();
+		if(vertexCount%2!=0){
+			vertexCount++;
+		}
+	}
 	
-	public void generate(){
+	public Graph generate(){
 		Factory<SparseGraph<Integer, Integer>> graphFactory;
 		graphFactory = new Factory<SparseGraph<Integer, Integer>>() {
 			public SparseGraph<Integer, Integer> create() {
@@ -37,8 +45,8 @@ public class SmallWorldGenerator {
 		};
 		KleinbergSmallWorldGenerator smallWorld = new KleinbergSmallWorldGenerator(graphFactory,vertexFactory,edgeFactory,2,vertexCount/2,3);		
 		Graph network = smallWorld.create();
-		
-		Processor.handle(network,"SmallWorld");
+		return network;
+//		Processor.handle(network,"SmallWorld");
 		
 	}
 }
