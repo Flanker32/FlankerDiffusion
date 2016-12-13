@@ -88,7 +88,7 @@ public class Enterence {
 //
 //    }
 
-    public static void main(String[] args){
+    public static void main(String[] args) {
 //        NetworkParameter dtParameter = new NetworkParameter(StrategyType.DetThr,false);
 //        NetworkParameter daParameter = new NetworkParameter(StrategyType.DetAvg,false);
 //        NetworkParameter ptParameter = new NetworkParameter(StrategyType.ProThr,false);
@@ -102,29 +102,38 @@ public class Enterence {
 //        experiment4.diffusionExperiment(0.1,10,100);
 //        experiment1.diffusionExperiment(0.1,10,100);
         NetworkParameter networkParameter = new NetworkParameter();
-        networkParameter.setBinary(false);
-        networkParameter.setAgentNumber(10000);
-        networkParameter.setEdgeNumber(50000);
-        networkParameter.setNetworkType(NetworkType.SmallWorld);
+        networkParameter.setBinary(true);
+        networkParameter.setAgentNumber(1000);
+        networkParameter.setEdgeNumber(10000);
+        networkParameter.setNetworkType(NetworkType.Random);
         networkParameter.setStrategyType(StrategyType.DetThr);
 
+        int[] startList = Util.getStartAgents(1000, 0.01);
+        networkParameter.setBinary(true);
         Network smallworld = NetworkFactory.generateNetwork(networkParameter);
-        networkParameter.setNetworkType(NetworkType.Regular);
-        Network regular = NetworkFactory.generateNetwork(networkParameter);
-        networkParameter.setNetworkType(NetworkType.Random);
-        Network random = NetworkFactory.generateNetwork(networkParameter);
-        networkParameter.setNetworkType(NetworkType.ScaleFree);
-        Network scalefree = NetworkFactory.generateNetwork(networkParameter);
-        int[] startList = Util.getStartAgents(10000,0.01);
 
-        System.out.println("smallworld diffusion!");
-        smallworld.startDiffusion(startList,10,100);
-        System.out.println("regular diffusion!");
-        regular.startDiffusion(startList,10,100);
-        System.out.println("random diffusion!");
-        random.startDiffusion(startList,10,100);
-        System.out.println("scalefree diffusion!");
-        scalefree.startDiffusion(startList,10,100);
+        System.out.println("smallworld1 diffusion! Binary");
+        smallworld.startDiffusion(startList, 1, 100);
+        System.out.println("smallworld2 diffusion! Not Binary");
+        smallworld.changeAgentDetermineStragy(StrategyType.DetThr,false);
+        smallworld.startDiffusion(startList, 10, 100);
+
+
+//        Network regular = NetworkFactory.generateNetwork(networkParameter);
+//        networkParameter.setNetworkType(NetworkType.Random);
+//        Network random = NetworkFactory.generateNetwork(networkParameter);
+//        networkParameter.setNetworkType(NetworkType.ScaleFree);
+//        Network scalefree = NetworkFactory.generateNetwork(networkParameter);
+//        int[] startList = Util.getStartAgents(1000, 0.01);
+
+//        System.out.println("smallworld diffusion!");
+//        smallworld.startDiffusion(startList,1,100);
+//        System.out.println("regular diffusion!");
+//        regular.startDiffusion(startList,1,100);
+//        System.out.println("random diffusion!");
+//        random.startDiffusion(startList,1,100);
+//        System.out.println("scalefree diffusion!");
+//        scalefree.startDiffusion(startList,1,100);
     }
 
 

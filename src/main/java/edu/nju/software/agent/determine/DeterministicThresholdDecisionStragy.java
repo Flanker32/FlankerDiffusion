@@ -30,8 +30,10 @@ public class DeterministicThresholdDecisionStragy implements AgentDetermineStrag
 				result = value;
 			}
 		}
+
 		sensor=0;
 		value = 0;
+
 		return result;
 	}
 

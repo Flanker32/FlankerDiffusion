@@ -18,10 +18,11 @@ public class SmallWorldGenerator {
 	}
 
 	public SmallWorldGenerator(NetworkParameter networkParameter){
-		this.vertexCount = networkParameter.getAgentNumber();
-		if(vertexCount%2!=0){
-			vertexCount++;
+		int count = networkParameter.getAgentNumber();
+		if(count%2!=0){
+			count++;
 		}
+		this.vertexCount=count;
 	}
 	
 	public Graph generate(){
@@ -45,8 +46,14 @@ public class SmallWorldGenerator {
 		};
 		KleinbergSmallWorldGenerator smallWorld = new KleinbergSmallWorldGenerator(graphFactory,vertexFactory,edgeFactory,2,vertexCount/2,3);		
 		Graph network = smallWorld.create();
+		clear();
 		return network;
 //		Processor.handle(network,"SmallWorld");
 		
+	}
+
+	private static void clear(){
+		vi=1;
+		ei=0;
 	}
 }

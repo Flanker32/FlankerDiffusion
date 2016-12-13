@@ -52,9 +52,14 @@ public class BarabasiAlbertNetGenerator {
         BarabasiAlbertGenerator ba = new BarabasiAlbertGenerator(graphFactory, vertexFactory, edgeFactory, init_vertices, numEdgesToAttach, seedVertices);
         ba.evolveGraph(vertexCount - init_vertices);
         Graph network = ba.create();
+        clear();
         //System.out.println(seedVertices);
 //        Processor.handle(network, "BarabasiAlbertNet");
         return network;
     }
 
+    private static void clear(){
+        vi=1;
+        ei=0;
+    }
 }

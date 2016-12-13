@@ -120,4 +120,15 @@ public class Agent {
         return frontAgent;
     }
 
+    public void setAgentDetermineStragy(AgentDetermineStragy agentDetermineStragy) {
+        this.agentDetermineStragy = agentDetermineStragy;
+    }
+
+    public void setThreshold(double threshold) {
+        this.threshold = threshold;
+    }
+
+    public void setWeight(double weight) {
+        this.weight = weight;
+    }
 }
