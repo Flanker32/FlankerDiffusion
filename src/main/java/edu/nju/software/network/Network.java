@@ -1,9 +1,13 @@
 package edu.nju.software.network;
 
 import edu.nju.software.agent.Agent;
+import edu.nju.software.agent.StrategyType;
+import edu.nju.software.agent.determine.*;
 import edu.nju.software.bean.DiffusionResult;
 
 import java.util.*;
+
+import static edu.nju.software.agent.StrategyType.*;
 
 /**
  * Created by Dell on 2016/11/26.
@@ -43,7 +47,7 @@ public class Network {
         finalActivedAgents = new boolean[agents.size()];
         for (int agentId : startAgents) {
             Agent agent = agents.get(agentId);
-            if(agent!=null){
+            if (agent != null) {
                 agent.diffuseFirstTime(startvalue);
             }
         }
@@ -55,7 +59,7 @@ public class Network {
                 diffusionResult.setAffectedAgentCount(activedAgentNumber);
                 break;
             } else {
-                diffusionResult.setDiffusePerTerm(i-1, activedAgents.size());
+                diffusionResult.setDiffusePerTerm(i - 1, activedAgents.size());
                 diffusionNewRound(activedAgents);
                 showNetworkStatus(activedAgents);
             }
@@ -92,7 +96,7 @@ public class Network {
     }
 
     protected void showNetworkStatus(List<Agent> activedAgents) {
-//        System.out.println("第"+diffusionRound+"轮扩散：新激活节点"+activedAgents.size());
+//        System.out.println("第" + diffusionRound + "轮扩散：新激活节点" + activedAgents.size());
 //        for(Agent agent:this.activedAgents){
 //            System.out.println("编号为："+agent.getId()+"的agent本轮后被激活");
 //        }
@@ -152,6 +156,28 @@ public class Network {
         }
     }
 
+    public void changeAgentDetermineStragy(StrategyType strategyType, boolean isBinary) {
+        AgentDetermineStragy stragy = null;
+        for (Agent agent : agents.values()) {
+            switch (strategyType) {
+                case DetAvg:
+                    stragy = new DeterministicAverageDecisionStragy(isBinary);
+                    break;
+                case DetThr:
+                    stragy = new DeterministicThresholdDecisionStragy(isBinary);
+                    break;
+                case ProAvg:
+                    stragy = new ProbabilisticAverageDecisionStragy(isBinary);
+                    break;
+                case ProThr:
+                    stragy = new ProbabilisticThresholdDecisionStragy(isBinary, Math.random());
+                    break;
+                default:
+                    break;
+            }
+            agent.setAgentDetermineStragy(stragy);
+        }
+    }
 
 //    public boolean addEdge(Agent first,Agent second ,int weight){
 //        return true;
@@ -160,4 +186,4 @@ public class Network {
 //    public void startDiffusion(List<Agent> startAgents){
 //
 //    }
-}
+    }

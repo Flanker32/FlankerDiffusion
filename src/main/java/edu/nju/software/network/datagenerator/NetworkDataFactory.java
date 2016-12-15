@@ -131,9 +131,11 @@ public class NetworkDataFactory {
         Collection<Integer> vertices = network.getVertices();
         List<AgentData> agentDatas = new ArrayList<AgentData>();
         double[] weightArray = new double[network.getVertexCount()];
+
         createVertexWeight(network.getVertexCount(), weightArray);
+//        System.out.println(vertices.size());
         for (Integer v : vertices) {
-            //System.out.println(v); // print the vertex
+//            System.out.println(v); // print the vertex
             double threshold = createVertexThreshold(); //the threshold of vertex
             double weight = weightArray[v.intValue() - 1];
             //conduct a new Vertex object

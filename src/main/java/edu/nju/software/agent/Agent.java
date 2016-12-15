@@ -9,14 +9,14 @@ import java.util.HashMap;
  * Created by Dell on 2016/11/26.
  */
 public class Agent {
-    static final double  DEFAULT_THRESHOLD_MEAN = 0.5;
+    static final double DEFAULT_THRESHOLD_MEAN = 0.5;
     static final double DEFAULT_THRESHOLD_VARIANCE = 1;
 
-    static final double  DEFAULT_WEIGHT_MEAN = 1;
+    static final double DEFAULT_WEIGHT_MEAN = 1;
     static final double DEFAULT_WEIGHT_VARIANCE = 1;
 
     private int id;
-    private boolean isActived=false;
+    private boolean isActived = false;
 
     private int inDegree = 0;
     private int outDegree = 0;
@@ -24,71 +24,68 @@ public class Agent {
     private double threshold = 0.0;
     private double output = 0.0;
     private AgentDetermineStragy agentDetermineStragy = null;
-    private HashMap<Agent,Double> frontAgent = new HashMap<Agent, Double>();
-    private HashMap<Agent,Double> afterAgent = new HashMap<Agent, Double>();
+    private HashMap<Agent, Double> frontAgent = new HashMap<Agent, Double>();
+    private HashMap<Agent, Double> afterAgent = new HashMap<Agent, Double>();
 
-    public Agent(int id, AgentDetermineStragy agentDetermineStragy){
-        this.id=id;
+    public Agent(int id, AgentDetermineStragy agentDetermineStragy) {
+        this.id = id;
         this.agentDetermineStragy = agentDetermineStragy;
 
         this.weight = Util.generageNormalValue(DEFAULT_WEIGHT_MEAN, DEFAULT_WEIGHT_VARIANCE);
         this.threshold = Util.generageNormalValue(DEFAULT_THRESHOLD_MEAN, DEFAULT_THRESHOLD_VARIANCE);
     }
 
-    public Agent(int id,AgentDetermineStragy agentDetermineStragy,double weight,double threshold){
-        this(id,agentDetermineStragy);
-        this.weight=weight;
-        this.threshold=threshold;
+    public Agent(int id, AgentDetermineStragy agentDetermineStragy, double weight, double threshold) {
+        this(id, agentDetermineStragy);
+        this.weight = weight;
+        this.threshold = threshold;
     }
 
-    public boolean addConnectionAsStart(Agent end,double weight){
-        afterAgent.put(end,weight);
+    public boolean addConnectionAsStart(Agent end, double weight) {
+        afterAgent.put(end, weight);
         outDegree++;
         return true;
     }
 
-    public boolean addConnectionAsEnd(Agent start,double weight){
-        frontAgent.put(start,weight);
+    public boolean addConnectionAsEnd(Agent start, double weight) {
+        frontAgent.put(start, weight);
         inDegree++;
         return true;
     }
 
-    public boolean diffusePerception(double agentWeight,double edgeWeight,double output){
-        this.agentDetermineStragy.diffusePerception(agentWeight,edgeWeight,output);
+    public boolean diffusePerception(double agentWeight, double edgeWeight, double output) {
+        this.agentDetermineStragy.diffusePerception(agentWeight, edgeWeight, output);
         return true;
     }
 
-    public boolean diffusionJudgement()
-    {
+    public boolean diffusionJudgement() {
         output = agentDetermineStragy.determine(this);
-        if(output<=0||isActived){
+        if (output <= 0 || isActived) {
             return false;
-        }else{
+        } else {
             return true;
         }
     }
 
-    public boolean diffuse()
-    {
-        for(Agent agent:afterAgent.keySet()){
-            agent.diffusePerception(this.weight,afterAgent.get(agent),output);
+    public boolean diffuse() {
+        for (Agent agent : afterAgent.keySet()) {
+            agent.diffusePerception(this.weight, afterAgent.get(agent), output);
         }
-        this.isActived=true;
+        this.isActived = true;
         return true;
     }
 
-    public boolean diffuseFirstTime(double value)
-    {
-        for(Agent agent:afterAgent.keySet()){
-            agent.diffusePerception(this.weight,afterAgent.get(agent),value);
+    public boolean diffuseFirstTime(double value) {
+        for (Agent agent : afterAgent.keySet()) {
+            agent.diffusePerception(this.weight, afterAgent.get(agent), value);
         }
-        this.isActived=true;
+        this.isActived = true;
         return true;
     }
 
-    public void clear(){
-        this.isActived=false;
-        this.output=0.0;
+    public void clear() {
+        this.isActived = false;
+        this.output = 0.0;
     }
 
 
@@ -120,6 +117,10 @@ public class Agent {
         return frontAgent;
     }
 
+    public void setAgentDetermineStragy(AgentDetermineStragy agentDetermineStragy) {
+        this.agentDetermineStragy = agentDetermineStragy;
+    }
+
     public void setWeight(double weight) {
         this.weight = weight;
     }
@@ -127,4 +128,5 @@ public class Agent {
     public void setThreshold(double threshold) {
         this.threshold = threshold;
     }
+
 }

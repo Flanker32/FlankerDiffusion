@@ -19,7 +19,7 @@ public class Util {
     public static double generagePositiveNormalValue(double mean,double variance){
         double temple = generageNormalValue(mean,variance);
         if(temple<=0){
-            return 0;
+            return Math.abs(temple);
         }else{
             return temple;
         }

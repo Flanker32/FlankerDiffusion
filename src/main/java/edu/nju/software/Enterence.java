@@ -88,7 +88,7 @@ public class Enterence {
 //
 //    }
 
-    public static void main(String[] args){
+    public static void main(String[] args) {
         NetworkParameter networkParameter = new NetworkParameter();
         networkParameter.setBinary(true);
         networkParameter.setStrategyType(StrategyType.DetThr);
@@ -107,6 +107,22 @@ public class Enterence {
         dScaleFree.startDiffusion(startList,1,100);
         System.out.println("dSmallWorld diffusion!");
         dSmallWorld.startDiffusion(startList,1,100);
+
+//        Network regular = NetworkFactory.generateNetwork(networkParameter);
+//        networkParameter.setNetworkType(NetworkType.Random);
+//        Network random = NetworkFactory.generateNetwork(networkParameter);
+//        networkParameter.setNetworkType(NetworkType.ScaleFree);
+//        Network scalefree = NetworkFactory.generateNetwork(networkParameter);
+//        int[] startList = Util.getStartAgents(1000, 0.01);
+
+//        System.out.println("smallworld diffusion!");
+//        smallworld.startDiffusion(startList,1,100);
+//        System.out.println("regular diffusion!");
+//        regular.startDiffusion(startList,1,100);
+//        System.out.println("random diffusion!");
+//        random.startDiffusion(startList,1,100);
+//        System.out.println("scalefree diffusion!");
+//        scalefree.startDiffusion(startList,1,100);
     }
 
 

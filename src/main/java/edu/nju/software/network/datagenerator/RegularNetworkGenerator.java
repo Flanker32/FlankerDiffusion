@@ -40,8 +40,14 @@ public class RegularNetworkGenerator {
 		};
 		Lattice2DGenerator rn = new Lattice2DGenerator(graphFactory,vertexFactory,edgeFactory,2,vertexCount/2,false);
 		Graph network = rn.create();
+		clear();
 		return network;
 //		Processor.handle(network,"RegularNetwork");
 		
+	}
+
+	private static void clear(){
+		vi=1;
+		ei=0;
 	}
 }

@@ -44,8 +44,14 @@ public class ErdosRenyiRandomGenerator {
 		ErdosRenyiGenerator erRandom = new ErdosRenyiGenerator(graphFactory,vertexFactory,edgeFactory,vertexCount,probability);
 		
 		Graph network = erRandom.create();
+		clear();
 		return network;
 //		Processor.handle(network,"ErdosRenyiRandom");
 		
+	}
+
+	private static void clear(){
+		vi=1;
+		ei=0;
 	}
 }
