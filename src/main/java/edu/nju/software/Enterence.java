@@ -1,6 +1,7 @@
 package edu.nju.software;
 
 import edu.nju.software.agent.StrategyType;
+import edu.nju.software.bean.DiffusionResult;
 import edu.nju.software.bean.NetworkParameter;
 import edu.nju.software.experiment.DiffusionSpeedExperiment;
 import edu.nju.software.network.Network;
@@ -51,65 +52,76 @@ public class Enterence {
 //        System.out.println("网络生成完毕");
 //
 //        System.out.println("Scale_Free网络 D T");
-//        scale_free0.startDiffusion(startPoints,startValue,diffusionRound);
-//        System.out.println("Scale_Free网络 D A");
-//        scale_free1.startDiffusion(startPoints,startValue,diffusionRound);
-//        System.out.println("Scale_Free网络 P T");
-//        scale_free2.startDiffusion(startPoints,startValue,diffusionRound);
-//        System.out.println("Scale_Free网络 P A");
-//        scale_free3.startDiffusion(startPoints,startValue,diffusionRound);
+//        scale_free0.changeAgentThreshold(50,10);
+//        scale_free0.startDiffusion(0.01,startValue,diffusionRound);
+////        System.out.println("Scale_Free网络 D A");
+////        scale_free1.startDiffusion(0.01,startValue,diffusionRound);
+////        System.out.println("Scale_Free网络 P T");
+////        scale_free2.startDiffusion(0.01,startValue,diffusionRound);
+////        System.out.println("Scale_Free网络 P A");
+////        scale_free3.startDiffusion(0.01,startValue,diffusionRound);
 //
 //        System.out.println("Random网络 D T");
-//        random0.startDiffusion(startPoints,startValue,diffusionRound);
-//        System.out.println("Random网络 D A");
-//        random1.startDiffusion(startPoints,startValue,diffusionRound);
-//        System.out.println("Random网络 P T");
-//        random2.startDiffusion(startPoints,startValue,diffusionRound);
-//        System.out.println("Random网络 P A");
-//        random3.startDiffusion(startPoints,startValue,diffusionRound);
+//        random0.changeAgentThreshold(50,10);
+//        random0.startDiffusion(0.01,startValue,diffusionRound);
+////        System.out.println("Random网络 D A");
+////        random1.startDiffusion(0.01,startValue,diffusionRound);
+////        System.out.println("Random网络 P T");
+////        random2.startDiffusion(0.01,startValue,diffusionRound);
+////        System.out.println("Random网络 P A");
+////        random3.startDiffusion(0.01,startValue,diffusionRound);
 //
 //        System.out.println("Regular网络 D T");
-//        regular0.startDiffusion(startPoints,startValue,diffusionRound);
-//        System.out.println("Regular网络 D A");
-//        regular1.startDiffusion(startPoints,startValue,diffusionRound);
-//        System.out.println("Regular网络 P T");
-//        regular2.startDiffusion(startPoints,startValue,diffusionRound);
-//        System.out.println("Regular网络 P A");
-//        regular3.startDiffusion(startPoints,startValue,diffusionRound);
+//        regular0.changeAgentThreshold(50,10);
+//        regular0.startDiffusion(0.01,startValue,diffusionRound);
+////        System.out.println("Regular网络 D A");
+////        regular1.startDiffusion(0.01,startValue,diffusionRound);
+////        System.out.println("Regular网络 P T");
+////        regular2.startDiffusion(0.01,startValue,diffusionRound);
+////        System.out.println("Regular网络 P A");
+////        regular3.startDiffusion(0.01,startValue,diffusionRound);
 //
 //        System.out.println("Small_world网络 D T");
-//        small_world0.startDiffusion(startPoints,startValue,diffusionRound);
-//        System.out.println("Small_world网络 D A");
-//        small_world1.startDiffusion(startPoints,startValue,diffusionRound);
-//        System.out.println("Small_world网络 P T");
-//        small_world2.startDiffusion(startPoints,startValue,diffusionRound);
-//        System.out.println("Small_world网络 P A");
-//        small_world3.startDiffusion(startPoints,startValue,diffusionRound);
+//        small_world0.changeAgentThreshold(50,10);
+//        small_world0.startDiffusion(0.01,startValue,diffusionRound);
+////        System.out.println("Small_world网络 D A");
+////        small_world1.startDiffusion(0.01,startValue,diffusionRound);
+////        System.out.println("Small_world网络 P T");
+////        small_world2.startDiffusion(0.01,startValue,diffusionRound);
+////        System.out.println("Small_world网络 P A");
+////        small_world3.startDiffusion(0.01,startValue,diffusionRound);
 //
 //    }
 
     public static void main(String[] args) {
-//        NetworkParameter networkParameter = new NetworkParameter();
-//        networkParameter.setBinary(true);
-//        networkParameter.setStrategyType(StrategyType.DetThr);
-//
+        NetworkParameter networkParameter = new NetworkParameter();
+        networkParameter.setBinary(true);
+        networkParameter.setStrategyType(StrategyType.DetThr);
+
 //        Network dCluster = NetworkFactory.readSouthEaseNetworkFromFile(30000,100,"cluster.txt",networkParameter);
 //        Network dRandom = NetworkFactory.readSouthEaseNetworkFromFile(30000,100,"random.txt",networkParameter);
 //        Network dScaleFree = NetworkFactory.readSouthEaseNetworkFromFile(30000,100,"scalefree.txt",networkParameter);
 //        Network dSmallWorld = NetworkFactory.readSouthEaseNetworkFromFile(30000,100,"smallworld.txt",networkParameter);
-//
-//        int[] startList = Util.getStartAgents(30000,0.01);
-//        System.out.println("dCluster diffusion!");
-//        dCluster.startDiffusion(startList,1,100);
+
+
+        System.out.println("dCluster diffusion!");
+        double total = 0;
+//        for(int i=0;i<100;i++){
+//            Network dCluster = NetworkFactory.readSouthEaseNetworkFromFile(30000,100,"cluster.txt",networkParameter);
+//            DiffusionResult diffusionResult = dCluster.startDiffusion(0.01,1,100);
+//            total+=diffusionResult.getAffectedAgentCount();
+//        }
+        int[] start = {0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20};
+        Network dCluster = NetworkFactory.readSouthEaseNetworkFromFile(30000,100,"scalefree.txt",networkParameter);
+        dCluster.startDiffusion(start,1,1000000);
+//        dCluster.startDiffusion(0.01,1,100);
 //        System.out.println("dRandom diffusion!");
 //        dRandom.startDiffusion(startList,1,100);
 //        System.out.println("dScaleFree diffusion!");
 //        dScaleFree.startDiffusion(startList,1,100);
 //        System.out.println("dSmallWorld diffusion!");
 //        dSmallWorld.startDiffusion(startList,1,100);
-        for(int i=0;i<100;i++){
-            System.out.println(Util.generagePositiveNormalValue(10,1));
-        }
+
     }
 
 

@@ -56,6 +56,7 @@ public class Network {
             Agent agent = agents.get(agentId);
             if (agent != null) {
                 agent.diffuseFirstTime(startvalue);
+                activedAgentNumber++;
             }
         }
 
@@ -104,7 +105,7 @@ public class Network {
 
     protected void showNetworkStatus(List<Agent> activedAgents) {
 //        System.out.println("第" + diffusionRound + "轮扩散：新激活节点" + activedAgents.size());
-//        for(Agent agent:this.activedAgents){
+//        for(Agent agent:activedAgents){
 //            System.out.println("编号为："+agent.getId()+"的agent本轮后被激活");
 //        }
     }

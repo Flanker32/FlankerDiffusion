@@ -42,8 +42,8 @@ public class NetworkFactory {
         for(int i=0;i<number;i++){
             AgentParameter agentParameter = new AgentParameter(i);
             agentParameter.setType(networkParameter.getStrategyType());
-            agentParameter.setWeight(1);
-            agentParameter.setThreshold(Math.random()*maxThreshold);
+            agentParameter.setWeight(5);
+            agentParameter.setThreshold(20);
             agentParameter.setBinary(networkParameter.isBinary());
             network.addAgent(AgentFactory.newAgent(agentParameter));
         }
@@ -63,11 +63,12 @@ public class NetworkFactory {
                 }
                 String[] connectPoints = input.split(" ");
                 for(String s:connectPoints){
-                    network.addEdge(lineCode,Integer.valueOf(s),Math.random()*10);
+//                    network.addEdge(lineCode,Integer.valueOf(s),Math.random()*10+1);
+                    network.addEdge(lineCode,Integer.valueOf(s),5);
                 }
-                if(connectPoints.length>0){
-                    network.getAgent(lineCode).setWeight(connectPoints.length);
-                }
+//                if(connectPoints.length>0){
+//                    network.getAgent(lineCode).setWeight(connectPoints.length);
+//                }
                 lineCode++;
             }
         } catch (FileNotFoundException e) {
