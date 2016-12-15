@@ -7,6 +7,8 @@ import edu.nju.software.agent.StrategyType;
 import edu.nju.software.bean.*;
 import edu.nju.software.network.datagenerator.NetworkDataFactory;
 
+import java.io.*;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -30,6 +32,48 @@ public class NetworkFactory {
 
         for(EdgeData edge:edgeDatas){
             network.addEdge(edge.getStart(),edge.getEnd(),edge.getWeight());
+        }
+
+        return network;
+    }
+
+    public static Network readSouthEaseNetworkFromFile(int number,int maxThreshold,String file,NetworkParameter networkParameter){
+        Network network = new Network();
+        for(int i=0;i<number;i++){
+            AgentParameter agentParameter = new AgentParameter(i);
+            agentParameter.setType(networkParameter.getStrategyType());
+            agentParameter.setWeight(1);
+            agentParameter.setThreshold(Math.random()*maxThreshold);
+            agentParameter.setBinary(networkParameter.isBinary());
+            network.addAgent(AgentFactory.newAgent(agentParameter));
+        }
+
+        int lineCode= 0;
+        FileInputStream fis = null;
+        try {
+            fis = new FileInputStream(new File(file));
+            InputStreamReader isr = new InputStreamReader(fis);
+            BufferedReader br = new BufferedReader(isr);
+            while(br.ready()&&lineCode<number){
+                String input = br.readLine();
+                input.trim();
+                if(input.length()==0){
+                    lineCode++;
+                    continue;
+                }
+                String[] connectPoints = input.split(" ");
+                for(String s:connectPoints){
+                    network.addEdge(lineCode,Integer.valueOf(s),Math.random()*10);
+                }
+                if(connectPoints.length>0){
+                    network.getAgent(lineCode).setWeight(connectPoints.length);
+                }
+                lineCode++;
+            }
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
         }
 
         return network;

@@ -120,4 +120,11 @@ public class Agent {
         return frontAgent;
     }
 
+    public void setWeight(double weight) {
+        this.weight = weight;
+    }
+
+    public void setThreshold(double threshold) {
+        this.threshold = threshold;
+    }
 }

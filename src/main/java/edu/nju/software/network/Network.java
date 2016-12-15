@@ -107,6 +107,10 @@ public class Network {
         }
     }
 
+    public Agent getAgent(int id){
+        return agents.get(id);
+    }
+
     public int getSize() {
         return agents.size();
     }
