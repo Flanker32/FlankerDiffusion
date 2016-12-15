@@ -25,19 +25,5 @@ public class Util {
         }
     }
 
-    public static int[] getStartAgents(int agentNumber, double startPercentage) {
-        int number = (int) Math.floor(agentNumber * startPercentage);
-        int[] result = new int[number];
-        HashSet<Integer> set = new HashSet<Integer>();
-        while (set.size() < number) {
-            int randomNumber = (int) Math.floor(agentNumber * Math.random());
-            set.add(randomNumber);
-        }
-        int count = 0;
-        for (Integer integer : set) {
-            result[count++] = integer;
-        }
 
-        return result;
-    }
 }

@@ -64,10 +64,10 @@ public class NetworkDataFactory {
         return Util.generagePositiveNormalValue(0.5, 1);
     }
 
+    //还没写好…………
     static double[] createVertexWeight(int count,double weight[] ,double weightPer[]){
         double[] result = new double[count];
 
-        //
         if(weight.length!=weightPer.length){
             return null;
         }
@@ -127,18 +127,14 @@ public class NetworkDataFactory {
     }
 
     static List<AgentData> generateAgents(Graph network) {
-        //handle vertex
         Collection<Integer> vertices = network.getVertices();
         List<AgentData> agentDatas = new ArrayList<AgentData>();
         double[] weightArray = new double[network.getVertexCount()];
 
         createVertexWeight(network.getVertexCount(), weightArray);
-//        System.out.println(vertices.size());
         for (Integer v : vertices) {
-//            System.out.println(v); // print the vertex
             double threshold = createVertexThreshold(); //the threshold of vertex
             double weight = weightArray[v.intValue() - 1];
-            //conduct a new Vertex object
             AgentData agent = new AgentData();
             agent.setId(v.intValue());
             agent.setThreshold(threshold);

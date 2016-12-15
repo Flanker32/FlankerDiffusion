@@ -42,8 +42,6 @@ public class RegularNetworkGenerator {
 		Graph network = rn.create();
 		clear();
 		return network;
-//		Processor.handle(network,"RegularNetwork");
-		
 	}
 
 	private static void clear(){

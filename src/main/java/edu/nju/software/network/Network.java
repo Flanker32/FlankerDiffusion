@@ -1,5 +1,6 @@
 package edu.nju.software.network;
 
+import edu.nju.software.Util;
 import edu.nju.software.agent.Agent;
 import edu.nju.software.agent.StrategyType;
 import edu.nju.software.agent.determine.*;
@@ -18,7 +19,7 @@ public class Network {
     private int diffusionRound = 0;
     private int activedAgentNumber = 0;
     HashMap<Integer, Agent> agents = new HashMap<Integer, Agent>();
-    boolean[] finalActivedAgents;
+
 
     public boolean addAgent(Agent agent) {
         agents.put(agent.getId(), agent);
@@ -38,13 +39,19 @@ public class Network {
         return true;
     }
 
+    //指定起始点百分比，初始值，传播轮数进行扩散
+    public DiffusionResult startDiffusion(double startPercentage, double startvalue, int round) {
+        int[] startList = this.getStartAgents(getSize(),startPercentage);
+        return startDiffusion(startList,startvalue,round);
+    }
+
+    //指定初始节点，初始值，传播轮数进行扩散
     public DiffusionResult startDiffusion(int[] startAgents, double startvalue, int round) {
         // 第一轮传播
         int agentCount = getSize();
         DiffusionResult diffusionResult = new DiffusionResult(agentCount, edgeCount, round);
         diffusionResult.setDiffusionRound(round);// set diffusion round max at first.
 
-        finalActivedAgents = new boolean[agents.size()];
         for (int agentId : startAgents) {
             Agent agent = agents.get(agentId);
             if (agent != null) {
@@ -111,18 +118,17 @@ public class Network {
         }
     }
 
-    public Agent getAgent(int id){
+    //获取特定agent的引用
+    public Agent getAgent(int id) {
         return agents.get(id);
     }
 
+    //获取网络规模（Agent数量）
     public int getSize() {
         return agents.size();
     }
 
-    public boolean[] getAgentStatus() {
-        return finalActivedAgents;
-    }
-
+    //计算所有Agent与指定id Agent的相似程度，并按照顺序返回
     public List<Agent> calSimilarityPoints(int number) {
         LinkedList<Agent> result = new LinkedList<Agent>();
         Agent sample = agents.get(number);
@@ -130,6 +136,7 @@ public class Network {
         return result;
     }
 
+    //相似度比较器类
     class AgentSimilarityComparator implements Comparator {
 
         Agent sample;
@@ -156,6 +163,21 @@ public class Network {
         }
     }
 
+    //按照正态分布重新分配权重
+    public void changeAgentWeight(double mean,double variance){
+        for(Agent agent:agents.values()){
+            agent.setWeight(Util.generagePositiveNormalValue(mean,variance));
+        }
+    }
+
+    //按照正态分布重新分配阈值
+    public void changeAgentThreshold(double mean,double variance){
+        for(Agent agent:agents.values()){
+            agent.setThreshold(Util.generagePositiveNormalValue(mean,variance));
+        }
+    }
+
+    //修改所有节点的决策方式
     public void changeAgentDetermineStragy(StrategyType strategyType, boolean isBinary) {
         AgentDetermineStragy stragy = null;
         for (Agent agent : agents.values()) {
@@ -179,11 +201,20 @@ public class Network {
         }
     }
 
-//    public boolean addEdge(Agent first,Agent second ,int weight){
-//        return true;
-//    }
+    //生成随机初始节点
+    private  int[] getStartAgents(int agentNumber, double startPercentage) {
+        int number = (int) Math.floor(agentNumber * startPercentage);
+        int[] result = new int[number];
+        HashSet<Integer> set = new HashSet<Integer>();
+        while (set.size() < number) {
+            int randomNumber = (int) Math.floor(agentNumber * Math.random());
+            set.add(randomNumber);
+        }
+        int count = 0;
+        for (Integer integer : set) {
+            result[count++] = integer;
+        }
 
-//    public void startDiffusion(List<Agent> startAgents){
-//
-//    }
+        return result;
     }
+}

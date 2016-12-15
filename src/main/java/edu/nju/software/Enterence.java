@@ -89,40 +89,27 @@ public class Enterence {
 //    }
 
     public static void main(String[] args) {
-        NetworkParameter networkParameter = new NetworkParameter();
-        networkParameter.setBinary(true);
-        networkParameter.setStrategyType(StrategyType.DetThr);
-
-        Network dCluster = NetworkFactory.readSouthEaseNetworkFromFile(30000,100,"cluster.txt",networkParameter);
-        Network dRandom = NetworkFactory.readSouthEaseNetworkFromFile(30000,100,"random.txt",networkParameter);
-        Network dScaleFree = NetworkFactory.readSouthEaseNetworkFromFile(30000,100,"scalefree.txt",networkParameter);
-        Network dSmallWorld = NetworkFactory.readSouthEaseNetworkFromFile(30000,100,"smallworld.txt",networkParameter);
-
-        int[] startList = Util.getStartAgents(30000,0.01);
-        System.out.println("dCluster diffusion!");
-        dCluster.startDiffusion(startList,1,100);
-        System.out.println("dRandom diffusion!");
-        dRandom.startDiffusion(startList,1,100);
-        System.out.println("dScaleFree diffusion!");
-        dScaleFree.startDiffusion(startList,1,100);
-        System.out.println("dSmallWorld diffusion!");
-        dSmallWorld.startDiffusion(startList,1,100);
-
-//        Network regular = NetworkFactory.generateNetwork(networkParameter);
-//        networkParameter.setNetworkType(NetworkType.Random);
-//        Network random = NetworkFactory.generateNetwork(networkParameter);
-//        networkParameter.setNetworkType(NetworkType.ScaleFree);
-//        Network scalefree = NetworkFactory.generateNetwork(networkParameter);
-//        int[] startList = Util.getStartAgents(1000, 0.01);
-
-//        System.out.println("smallworld diffusion!");
-//        smallworld.startDiffusion(startList,1,100);
-//        System.out.println("regular diffusion!");
-//        regular.startDiffusion(startList,1,100);
-//        System.out.println("random diffusion!");
-//        random.startDiffusion(startList,1,100);
-//        System.out.println("scalefree diffusion!");
-//        scalefree.startDiffusion(startList,1,100);
+//        NetworkParameter networkParameter = new NetworkParameter();
+//        networkParameter.setBinary(true);
+//        networkParameter.setStrategyType(StrategyType.DetThr);
+//
+//        Network dCluster = NetworkFactory.readSouthEaseNetworkFromFile(30000,100,"cluster.txt",networkParameter);
+//        Network dRandom = NetworkFactory.readSouthEaseNetworkFromFile(30000,100,"random.txt",networkParameter);
+//        Network dScaleFree = NetworkFactory.readSouthEaseNetworkFromFile(30000,100,"scalefree.txt",networkParameter);
+//        Network dSmallWorld = NetworkFactory.readSouthEaseNetworkFromFile(30000,100,"smallworld.txt",networkParameter);
+//
+//        int[] startList = Util.getStartAgents(30000,0.01);
+//        System.out.println("dCluster diffusion!");
+//        dCluster.startDiffusion(startList,1,100);
+//        System.out.println("dRandom diffusion!");
+//        dRandom.startDiffusion(startList,1,100);
+//        System.out.println("dScaleFree diffusion!");
+//        dScaleFree.startDiffusion(startList,1,100);
+//        System.out.println("dSmallWorld diffusion!");
+//        dSmallWorld.startDiffusion(startList,1,100);
+        for(int i=0;i<100;i++){
+            System.out.println(Util.generagePositiveNormalValue(10,1));
+        }
     }
 
 
