@@ -117,9 +117,14 @@ public class Agent {
         return frontAgent;
     }
 
+    public HashMap<Agent, Double> getAfterAgent() {
+        return afterAgent;
+    }
+
     public void setAgentDetermineStragy(AgentDetermineStragy agentDetermineStragy) {
         this.agentDetermineStragy = agentDetermineStragy;
     }
+
 
     public void setWeight(double weight) {
         this.weight = weight;
