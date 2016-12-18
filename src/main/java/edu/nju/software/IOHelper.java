@@ -1,5 +1,7 @@
 package edu.nju.software;
 
+import edu.nju.software.network.Network;
+
 import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -52,6 +54,29 @@ public class IOHelper {
         } catch (IOException e) {
             e.printStackTrace();
             return false;
+        }
+        return true;
+    }
+
+    public boolean transforDataToSouthEast(String fileName,Network network){
+        File file = new File(fileName);
+        try {
+            FileOutputStream fos = new FileOutputStream(file);
+            OutputStreamWriter osw = new OutputStreamWriter(fos);
+            BufferedWriter bw = new BufferedWriter(osw);
+
+            int number = network.getSize();
+            for(int i=0;i<number;i++){
+
+            }
+
+            bw.close();
+            osw.close();
+            fos.close();
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
         }
         return true;
     }

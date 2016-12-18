@@ -97,8 +97,10 @@ public class NetworkFactory {
         for (String s : agent) {
             String[] temple = s.split(",");
             int id = Integer.valueOf(temple[0]);
-            int weight = Integer.valueOf(temple[1]);
-            int threshold = Integer.valueOf(temple[2]);
+//            int weight = Integer.valueOf(temple[1]);
+//            int threshold = Integer.valueOf(temple[2]);
+            int weight = Integer.valueOf(5);
+            int threshold = Integer.valueOf(30);
             Agent temp = AgentFactory.newAgent(id, weight, threshold, isBinary, type);
             network.addAgent(temp);
         }
@@ -106,7 +108,8 @@ public class NetworkFactory {
             String[] temple = s.split(",");
             int start = Integer.valueOf(temple[0]);
             int end = Integer.valueOf(temple[1]);
-            int weight = Integer.valueOf(temple[2]);
+//            int weight = Integer.valueOf(temple[2]);
+            int weight = Integer.valueOf(5);
             network.addEdge(start, end, weight);
         }
 
