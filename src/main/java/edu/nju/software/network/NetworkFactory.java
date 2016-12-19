@@ -97,10 +97,10 @@ public class NetworkFactory {
         for (String s : agent) {
             String[] temple = s.split(",");
             int id = Integer.valueOf(temple[0]);
-//            int weight = Integer.valueOf(temple[1]);
-//            int threshold = Integer.valueOf(temple[2]);
-            int weight = Integer.valueOf(5);
-            int threshold = Integer.valueOf(30);
+            int weight = Integer.valueOf(temple[1]);
+            int threshold = Integer.valueOf(temple[2]);
+//            int weight = Integer.valueOf(5);
+//            int threshold = Integer.valueOf(30);
             Agent temp = AgentFactory.newAgent(id, weight, threshold, isBinary, type);
             network.addAgent(temp);
         }
@@ -108,13 +108,71 @@ public class NetworkFactory {
             String[] temple = s.split(",");
             int start = Integer.valueOf(temple[0]);
             int end = Integer.valueOf(temple[1]);
-//            int weight = Integer.valueOf(temple[2]);
-            int weight = Integer.valueOf(5);
+            int weight = Integer.valueOf(temple[2]);
+//            int weight = Integer.valueOf(5);
             network.addEdge(start, end, weight);
         }
 
         return network;
     }
 
+    public static Network readBigNetworkFromFile(String nodeFile, String edgeFile,NetworkParameter networkParameter,int maxNumber){
+        Network network = new Network();
+
+        File file = new File(nodeFile);
+        FileInputStream fis = null;
+        try {
+            fis = new FileInputStream(file);
+            InputStreamReader isr = new InputStreamReader(fis);
+            BufferedReader br = new BufferedReader(isr);
+            int count = 0;
+            while(br.ready()&&count<maxNumber){
+                String input = br.readLine();
+                String[] temple = input.split(",");
+                int id = Integer.valueOf(temple[0]);
+                int weight = Integer.valueOf(temple[1]);
+                int threshold = Integer.valueOf(temple[2]);
+
+                Agent temp = AgentFactory.newAgent(id, weight, threshold, networkParameter.isBinary(), networkParameter.getStrategyType());
+                network.addAgent(temp);
+                count++;
+            }
+            br.close();
+            isr.close();
+            fis.close();
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+            return null;
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        try {
+            file = new File(edgeFile);
+            fis = new FileInputStream(file);
+            InputStreamReader isr = new InputStreamReader(fis);
+            BufferedReader br = new BufferedReader(isr);
+            while(br.ready()){
+                String input = br.readLine();
+                String[] temple = input.split(",");
+                int first = Integer.valueOf(temple[0]);
+                int second = Integer.valueOf(temple[1]);
+                int weight = Integer.valueOf(temple[2]);
+                if((first<maxNumber)&&(second<maxNumber)){
+                    network.addEdge(first,second,weight);
+                }
+            }
+            br.close();
+            isr.close();
+            fis.close();
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+            return null;
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        return network;
+    }
 
 }

@@ -89,47 +89,50 @@ public class Enterence {
 //
 //    }
 
-        public static void main(String[] args) {
-            NetworkParameter networkParameter = new NetworkParameter();
-            networkParameter.setBinary(false);
-            networkParameter.setNetworkType(NetworkType.ScaleFree);
-            networkParameter.setStrategyType(StrategyType.DetAvg);
-            networkParameter.setAgentNumber(2500);
-            networkParameter.setEdgeNumber(10000);
-            Network network = NetworkFactory.generateNetwork(networkParameter);
-            network.startDiffusion(0.01,10,100);
+    //        public static void main(String[] args) {
+//            NetworkParameter networkParameter = new NetworkParameter();
+//            networkParameter.setBinary(false);
+//            networkParameter.setNetworkType(NetworkType.ScaleFree);
+//            networkParameter.setStrategyType(StrategyType.DetAvg);
+//            networkParameter.setAgentNumber(2500);
+//            networkParameter.setEdgeNumber(10000);
+//            Network network = NetworkFactory.generateNetwork(networkParameter);
+//            network.startDiffusion(0.01,10,100);
+//
+//        }
 
-        }
 //    public static void main(String[] args) {
 //        NetworkParameter networkParameter = new NetworkParameter();
 //        networkParameter.setBinary(true);
-//        networkParameter.setStrategyType(StrategyType.DetThr);
+//        networkParameter.setStrategyType(StrategyType.DetAvg);
 //
-//        Network dCluster = NetworkFactory.readSouthEaseNetworkFromFile(30000,100,"cluster.txt",networkParameter);
-//        Network dRandom = NetworkFactory.readSouthEaseNetworkFromFile(30000,100,"random.txt",networkParameter);
-//        Network dScaleFree = NetworkFactory.readSouthEaseNetworkFromFile(30000,100,"scalefree.txt",networkParameter);
-//        Network dSmallWorld = NetworkFactory.readSouthEaseNetworkFromFile(30000,100,"smallworld.txt",networkParameter);
+//        Network dCluster = NetworkFactory.readSouthEaseNetworkFromFile(30000, 100, "cluster.txt", networkParameter);
+//        Network dRandom = NetworkFactory.readSouthEaseNetworkFromFile(30000, 100, "random.txt", networkParameter);
+//        Network dScaleFree = NetworkFactory.readSouthEaseNetworkFromFile(30000, 100, "scalefree.txt", networkParameter);
+//        Network dSmallWorld = NetworkFactory.readSouthEaseNetworkFromFile(30000, 100, "smallworld.txt", networkParameter);
 //
 //
-//            System.out.println("dCluster diffusion!");
-//    double total = 0;
-//        for(int i=0;i<100;i++){
-//            Network dCluster = NetworkFactory.readSouthEaseNetworkFromFile(30000,100,"cluster.txt",networkParameter);
-//            DiffusionResult diffusionResult = dCluster.startDiffusion(0.01,1,100);
-//            total+=diffusionResult.getAffectedAgentCount();
-//        }
-//        int[] start = {0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20};
-//        Network dCluster = NetworkFactory.readSouthEaseNetworkFromFile(30000,100,"scalefree.txt",networkParameter);
-//        dCluster.startDiffusion(start,1,1000000);
-//        dCluster.startDiffusion(0.01,1,100);
-//        System.out.println("dRandom diffusion!");
-//        dRandom.startDiffusion(startList,1,100);
-//        System.out.println("dScaleFree diffusion!");
-//        dScaleFree.startDiffusion(startList,1,100);
+//        System.out.println("dCluster diffusion!");
+//
+//        int[] startList = {0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20};
+////
+////        dCluster.startDiffusion(startList,1,1000000);
+////        System.out.println("dRandom diffusion!");
+////        dRandom.startDiffusion(startList,1,10000);
+////        System.out.println("dScaleFree diffusion!");
+////        dScaleFree.startDiffusion(startList,1,10000);
 //        System.out.println("dSmallWorld diffusion!");
-//        dSmallWorld.startDiffusion(startList,1,100);
+//        dSmallWorld.startDiffusion(startList, 1, 10000);
 //
-//}
+//    }
+
+    public static void main(String[] args){
+        NetworkParameter networkParameter = new NetworkParameter();
+        networkParameter.setBinary(true);
+        networkParameter.setStrategyType(StrategyType.DetAvg);
+        Network twitter = NetworkFactory.readBigNetworkFromFile("twitter_nodes.txt","twitter_edges.txt",networkParameter,80000);
+        twitter.startDiffusion(0.05,1,1000);
+    }
 
 
 }

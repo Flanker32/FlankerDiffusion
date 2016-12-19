@@ -9,6 +9,7 @@ public class ProbabilisticAverageDecisionStragy implements AgentDetermineStragy 
     private boolean binary = false;
     private double sensor = 0.0;
     private double value=0; //对于输出》0的上级节点 他的地位与边权重乘积和 用于计算概率
+    private static final double threshold = 0.5;
 
     public ProbabilisticAverageDecisionStragy(boolean binary) {
         this.binary = binary;
@@ -25,7 +26,7 @@ public class ProbabilisticAverageDecisionStragy implements AgentDetermineStragy 
         result = sensor/calNeighborAvg(agent);
         if(Math.random()<probablity){
             if(binary){
-                if(result>=0.5){
+                if(result>=threshold){
                     result = 1;
                 }else{
                     result = 0;
