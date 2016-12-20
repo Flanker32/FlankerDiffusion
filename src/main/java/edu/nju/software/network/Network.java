@@ -5,6 +5,7 @@ import edu.nju.software.agent.Agent;
 import edu.nju.software.agent.StrategyType;
 import edu.nju.software.agent.determine.*;
 import edu.nju.software.bean.DiffusionResult;
+import edu.nju.software.bean.MultiDiffusionResult;
 
 import java.util.*;
 
@@ -82,6 +83,11 @@ public class Network {
 
         clear();
         return diffusionResult;
+    }
+
+    public MultiDiffusionResult startMultiDiffusion(double percentage, double startvalue, int round){
+        MultiDiffusionResult result = new MultiDiffusionResult();
+        return result;
     }
 
     protected List<Agent> getActivedAgents() {
