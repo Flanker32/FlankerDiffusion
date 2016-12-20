@@ -5,6 +5,7 @@ import edu.nju.software.agent.Agent;
 import edu.nju.software.agent.StrategyType;
 import edu.nju.software.agent.determine.*;
 import edu.nju.software.bean.DiffusionResult;
+import edu.nju.software.bean.MultiDiffusionResult;
 
 import java.util.*;
 
@@ -82,6 +83,42 @@ public class Network {
 
         clear();
         return diffusionResult;
+    }
+
+    public MultiDiffusionResult startMultiDiffusion(double percentage, double startvalue, int maxDiffuseRound,int expTimes){
+        MultiDiffusionResult result = new MultiDiffusionResult(expTimes);
+        result.setAgentCount(getSize());
+        result.setEdgeCount(edgeCount);
+
+        int actualMaxRound = 0;
+        double averageAffectedAgentCount = 0;
+        double[] averageDiffusePerTerm = new double[maxDiffuseRound];
+        int[] agentStatus = new int[getSize()];
+        for(int i=0;i<expTimes;i++){
+            DiffusionResult diffusionResult = this.startDiffusion(percentage,startvalue,maxDiffuseRound);
+            if(diffusionResult.getDiffusionRound()>actualMaxRound){
+                actualMaxRound = diffusionResult.getDiffusionRound();
+            }
+            averageAffectedAgentCount+=diffusionResult.getAffectedAgentCount();
+            for(int m=0;m<diffusionResult.getDiffusePerTerm().length;m++){
+                averageDiffusePerTerm[m]+=diffusionResult.getDiffusePerTerm()[m];
+            }
+            for(int m=0;m<getSize();m++){
+                if(diffusionResult.getAgentStatus()[m]){
+                    agentStatus[m]++;
+                }
+            }
+        }
+        averageAffectedAgentCount = averageAffectedAgentCount/expTimes;
+        for(int i=0;i<averageDiffusePerTerm.length;i++){
+            averageDiffusePerTerm[i]=averageDiffusePerTerm[i]/expTimes;
+        }
+
+        result.setAgentStatus(agentStatus);
+        result.setAverageAffectedAgentCount(averageAffectedAgentCount);
+        result.setAverageDiffusePerTerm(averageDiffusePerTerm);
+        result.setMaxDiffusionRound(maxDiffuseRound);
+        return result;
     }
 
     protected List<Agent> getActivedAgents() {

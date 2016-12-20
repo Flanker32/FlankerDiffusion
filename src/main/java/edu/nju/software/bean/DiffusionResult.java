@@ -7,6 +7,7 @@ public class DiffusionResult {
     int agentCount = 0;
     int edgeCount = 0;
     int maxDiffusionRound = 0;
+
     int diffusionRound = 0;
     int affectedAgentCount = 0;
     int[] diffusePerTerm;

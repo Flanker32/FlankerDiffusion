@@ -89,17 +89,18 @@ public class Enterence {
 //
 //    }
 
-    //        public static void main(String[] args) {
-//            NetworkParameter networkParameter = new NetworkParameter();
-//            networkParameter.setBinary(false);
-//            networkParameter.setNetworkType(NetworkType.ScaleFree);
-//            networkParameter.setStrategyType(StrategyType.DetAvg);
-//            networkParameter.setAgentNumber(2500);
-//            networkParameter.setEdgeNumber(10000);
-//            Network network = NetworkFactory.generateNetwork(networkParameter);
-//            network.startDiffusion(0.01,10,100);
-//
-//        }
+    public static void main(String[] args) {
+        NetworkParameter networkParameter = new NetworkParameter();
+        networkParameter.setBinary(true);
+//        networkParameter.setNetworkType(NetworkType.Regular);
+        networkParameter.setStrategyType(StrategyType.ProAvg);
+        networkParameter.setAgentNumber(5000);
+        networkParameter.setEdgeNumber(25000);
+
+        DiffusionSpeedExperiment experiment = new DiffusionSpeedExperiment(networkParameter,"ProAvg.txt",100);
+        experiment.diffusionExperiment(0.01,1,100);
+
+    }
 
 //    public static void main(String[] args) {
 //        NetworkParameter networkParameter = new NetworkParameter();
@@ -126,13 +127,13 @@ public class Enterence {
 //
 //    }
 
-    public static void main(String[] args){
-        NetworkParameter networkParameter = new NetworkParameter();
-        networkParameter.setBinary(true);
-        networkParameter.setStrategyType(StrategyType.DetAvg);
-        Network twitter = NetworkFactory.readBigNetworkFromFile("twitter_nodes.txt","twitter_edges.txt",networkParameter,80000);
-        twitter.startDiffusion(0.05,1,1000);
-    }
+//    public static void main(String[] args){
+//        NetworkParameter networkParameter = new NetworkParameter();
+//        networkParameter.setBinary(true);
+//        networkParameter.setStrategyType(StrategyType.DetAvg);
+//        Network twitter = NetworkFactory.readBigNetworkFromFile("twitter_nodes.txt","twitter_edges.txt",networkParameter,80000);
+//        twitter.startDiffusion(0.05,1,1000);
+//    }
 
 
 }
