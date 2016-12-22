@@ -1,14 +1,10 @@
 package edu.nju.software;
 
 import edu.nju.software.agent.StrategyType;
-import edu.nju.software.bean.DiffusionResult;
 import edu.nju.software.bean.NetworkParameter;
 import edu.nju.software.experiment.DiffusionSpeedExperiment;
-import edu.nju.software.network.Network;
-import edu.nju.software.network.NetworkFactory;
+import edu.nju.software.experiment.ThresholdExperiment;
 import edu.nju.software.network.NetworkType;
-
-import java.util.HashSet;
 
 /**
  * Created by Dell on 2016/11/26.
@@ -93,12 +89,13 @@ public class Enterence {
         NetworkParameter networkParameter = new NetworkParameter();
         networkParameter.setBinary(true);
 //        networkParameter.setNetworkType(NetworkType.Regular);
-        networkParameter.setStrategyType(StrategyType.ProAvg);
+        networkParameter.setStrategyType(StrategyType.DetThr);
         networkParameter.setAgentNumber(5000);
         networkParameter.setEdgeNumber(25000);
+//        networkParameter.setNetworkType(NetworkType.Regular);
 
-        DiffusionSpeedExperiment experiment = new DiffusionSpeedExperiment(networkParameter,"ProAvg.txt",100);
-        experiment.diffusionExperiment(0.01,1,100);
+        DiffusionSpeedExperiment experiment = new DiffusionSpeedExperiment(networkParameter,"DetThr",100);
+        experiment.tongyiExperiment(0.01,1,100);
 
     }
 

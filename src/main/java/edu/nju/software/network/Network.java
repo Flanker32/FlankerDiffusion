@@ -148,7 +148,7 @@ public class Network {
     }
 
     protected void clear() {
-        System.out.println("扩散结束，扩散轮数" + diffusionRound + "扩散节点数" + activedAgentNumber + "/" + agents.size());
+//        System.out.println("扩散结束，扩散轮数" + diffusionRound + "扩散节点数" + activedAgentNumber + "/" + agents.size());
         this.diffusionRound = 0;
         this.activedAgentNumber = 0;
         for (Agent agent : agents.values()) {

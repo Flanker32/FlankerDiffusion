@@ -8,6 +8,7 @@ import edu.nju.software.network.NetworkFactory;
 import edu.nju.software.network.NetworkType;
 
 import java.text.DecimalFormat;
+import java.util.AbstractList;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -39,6 +40,46 @@ public class DiffusionSpeedExperiment {
         small_world = NetworkFactory.generateNetwork(networkParameter);
 
         this.expRound = expRound;
+    }
+
+    public void tongyiExperiment(double startPercentage, double startValue,int round){
+        MultiDiffusionResult randomResult = random.startMultiDiffusion(startPercentage,startValue,round,expRound);
+        MultiDiffusionResult regularResult = regular.startMultiDiffusion(startPercentage,startValue,round,expRound);
+        MultiDiffusionResult scale_freeResult = scale_free.startMultiDiffusion(startPercentage,startValue,round,expRound);
+        MultiDiffusionResult small_worldResult = small_world.startMultiDiffusion(startPercentage,startValue,round,expRound);
+
+
+        List<double[]> agentDecideSimilarityList = new ArrayList<>();
+        agentDecideSimilarityList.add(calDevideSimilarity(randomResult.getAgentStatus(),randomResult.getTerms()));
+        agentDecideSimilarityList.add(calDevideSimilarity(regularResult.getAgentStatus(),randomResult.getTerms()));
+        agentDecideSimilarityList.add(calDevideSimilarity(scale_freeResult.getAgentStatus(),randomResult.getTerms()));
+        agentDecideSimilarityList.add(calDevideSimilarity(small_worldResult.getAgentStatus(),randomResult.getTerms()));
+
+
+        List<String> output = new ArrayList<String>();
+        DecimalFormat df = new DecimalFormat("0.00");
+        for(int i=0;i<agentDecideSimilarityList.get(0).length;i++){
+            String temp = new String();
+            for(double[] list:agentDecideSimilarityList){
+                temp = temp+ df.format(list[i])+",";
+            }
+            output.add(temp);
+        }
+        IOHelper.writeToFile("DecideSimilarity_"+outputFile+".txt",output);
+    }
+
+    private double[] calDevideSimilarity(int[] agentStatus,int total){
+        double[] result = new double[agentStatus.length];
+        for(int i=0;i<result.length;i++){
+            result[i]=calDecideSimilarity(agentStatus[i],total);
+        }
+        return result;
+    }
+
+    private double calDecideSimilarity(int decide,int total){
+        double result = 0.0;
+        result =(Math.pow(decide-total/2,2)*4)/Math.pow(total,2); ;
+        return result;
     }
 
     public void diffusionExperiment(double startPercentage, double startValue,int round) {
