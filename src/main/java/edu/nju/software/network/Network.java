@@ -85,7 +85,32 @@ public class Network {
         return diffusionResult;
     }
 
+    public MultiDiffusionResult startMultiDiffusion(int[] startAgents, double startvalue, int maxDiffuseRound,int expTimes){
+        List<DiffusionResult> results = new ArrayList<>();
+        for(int i=0;i<expTimes;i++){
+            results.add(this.startDiffusion(startAgents,startvalue,maxDiffuseRound));
+        }
+        return analyzeMultiDiffusionResult(results,maxDiffuseRound,expTimes);
+    }
+
     public MultiDiffusionResult startMultiDiffusion(double percentage, double startvalue, int maxDiffuseRound,int expTimes){
+        return startMultiDiffusion(percentage,startvalue,maxDiffuseRound,expTimes,true);
+    }
+
+    public MultiDiffusionResult startMultiDiffusion(double percentage, double startvalue, int maxDiffuseRound,int expTimes,boolean reSelect){
+        List<DiffusionResult> results = new ArrayList<>();
+        int[] startList = this.getStartAgents(this.getSize(),percentage);
+        for(int i=0;i<expTimes;i++){
+            if(reSelect){
+                results.add(this.startDiffusion(percentage,startvalue,maxDiffuseRound));
+            }else{
+                results.add(this.startDiffusion(startList,startvalue,maxDiffuseRound));
+            }
+        }
+        return analyzeMultiDiffusionResult(results,maxDiffuseRound,expTimes);
+    }
+
+    public MultiDiffusionResult analyzeMultiDiffusionResult(List<DiffusionResult> results ,int maxDiffuseRound,int expTimes){
         MultiDiffusionResult result = new MultiDiffusionResult(expTimes);
         result.setAgentCount(getSize());
         result.setEdgeCount(edgeCount);
@@ -94,8 +119,7 @@ public class Network {
         double averageAffectedAgentCount = 0;
         double[] averageDiffusePerTerm = new double[maxDiffuseRound];
         int[] agentStatus = new int[getSize()];
-        for(int i=0;i<expTimes;i++){
-            DiffusionResult diffusionResult = this.startDiffusion(percentage,startvalue,maxDiffuseRound);
+        for(DiffusionResult diffusionResult:results){
             if(diffusionResult.getDiffusionRound()>actualMaxRound){
                 actualMaxRound = diffusionResult.getDiffusionRound();
             }
