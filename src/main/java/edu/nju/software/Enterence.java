@@ -3,6 +3,7 @@ package edu.nju.software;
 import edu.nju.software.agent.StrategyType;
 import edu.nju.software.bean.NetworkParameter;
 import edu.nju.software.experiment.DiffusionSpeedExperiment;
+import edu.nju.software.experiment.ModelSimilarityExperiment;
 import edu.nju.software.experiment.ThresholdExperiment;
 import edu.nju.software.network.NetworkType;
 
@@ -88,13 +89,15 @@ public class Enterence {
     public static void main(String[] args) {
         NetworkParameter networkParameter = new NetworkParameter();
         networkParameter.setBinary(true);
-//        networkParameter.setNetworkType(NetworkType.Regular);
+        networkParameter.setNetworkType(NetworkType.Regular);
         networkParameter.setStrategyType(StrategyType.ProThr);
         networkParameter.setAgentNumber(5000);
         networkParameter.setEdgeNumber(25000);
 
-        DiffusionSpeedExperiment experiment = new DiffusionSpeedExperiment(networkParameter,networkParameter.getStrategyType().toString(),100);
-        experiment.diffusionExperiment(0.01,1,1000);
+//        DiffusionSpeedExperiment experiment = new DiffusionSpeedExperiment(networkParameter,networkParameter.getStrategyType().toString(),100);
+//        experiment.diffusionExperiment(0.01,1,1000);
+        ModelSimilarityExperiment experiment = new ModelSimilarityExperiment(networkParameter);
+        experiment.experiment(0.01,1,1000,100);
 
     }
 

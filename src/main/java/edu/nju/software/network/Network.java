@@ -193,6 +193,9 @@ public class Network {
     //计算所有Agent与指定id Agent的相似程度，并按照顺序返回
     public List<Agent> calSimilarityPoints(int number) {
         LinkedList<Agent> result = new LinkedList<Agent>();
+        for(Agent agent:agents.values()){
+            result.add(agent);
+        }
         Agent sample = agents.get(number);
         result.sort(new AgentSimilarityComparator(sample));
         return result;

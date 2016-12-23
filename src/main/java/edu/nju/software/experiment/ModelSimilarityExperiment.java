@@ -1,5 +1,6 @@
 package edu.nju.software.experiment;
 
+import edu.nju.software.Util;
 import edu.nju.software.agent.Agent;
 import edu.nju.software.agent.StrategyType;
 import edu.nju.software.bean.MultiDiffusionResult;
@@ -67,5 +68,7 @@ public class ModelSimilarityExperiment {
         resultList[0]=firstResult;
         resultList[1]=secondResult;
         resultList[2]=thirdResult;
+
+        Util.writeMultiDiffusionResultToFile(resultList,"ModelSimilarity_"+name);
     }
 }
