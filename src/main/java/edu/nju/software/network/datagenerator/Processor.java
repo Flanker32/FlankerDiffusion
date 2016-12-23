@@ -27,6 +27,9 @@ public class Processor {
 		return Util.generagePositiveNormalValue(0.5, 1);
 		//return ra.nextGaussian();
 	}
+
+
+
 	static void createVertexWeight(int vertexCount,double [] weightArray){
 	
 		for(int i = 1; i <= vertexCount*(0.05);i++){

@@ -1,6 +1,8 @@
 package edu.nju.software.experiment;
 
+import edu.nju.software.Constant;
 import edu.nju.software.IOHelper;
+import edu.nju.software.Util;
 import edu.nju.software.bean.MultiDiffusionResult;
 import edu.nju.software.bean.NetworkParameter;
 import edu.nju.software.network.Network;
@@ -20,8 +22,9 @@ public class DiffusionSpeedExperiment {
     private Network regular;
     private Network scale_free;
     private Network small_world;
+    private Network twitter;
     private String outputFile;
-    private static int networkNumber = 4;
+    private static int networkNumber = 5;
 
     private int expRound;
 
@@ -39,33 +42,17 @@ public class DiffusionSpeedExperiment {
         networkParameter.setNetworkType(NetworkType.SmallWorld);
         small_world = NetworkFactory.generateNetwork(networkParameter);
 
+        twitter = NetworkFactory.readBigNetworkFromFile("twitter_nodes.txt","twitter_edges.txt",networkParameter,5000);
+        twitter.changeAgentWeight(3,1);
+        System.out.println("twitter "+twitter.getSize()+" "+twitter.getEdgeCount());
+        double averageWeight = 3;
+        double edgeAverageWeight = 1;
+        double averageEdgeNumber = twitter.getEdgeCount()/twitter.getSize();
+        double averageThreshold =edgeAverageWeight*averageWeight*averageEdgeNumber*Constant.THRESHOLD_AVERAGE_PERCENTAGE;
+
+        twitter.changeAgentThreshold(averageThreshold,1);
+
         this.expRound = expRound;
-    }
-
-    public void tongyiExperiment(double startPercentage, double startValue,int round){
-        MultiDiffusionResult randomResult = random.startMultiDiffusion(startPercentage,startValue,round,expRound);
-        MultiDiffusionResult regularResult = regular.startMultiDiffusion(startPercentage,startValue,round,expRound);
-        MultiDiffusionResult scale_freeResult = scale_free.startMultiDiffusion(startPercentage,startValue,round,expRound);
-        MultiDiffusionResult small_worldResult = small_world.startMultiDiffusion(startPercentage,startValue,round,expRound);
-
-
-        List<double[]> agentDecideSimilarityList = new ArrayList<>();
-        agentDecideSimilarityList.add(calDevideSimilarity(randomResult.getAgentStatus(),randomResult.getTerms()));
-        agentDecideSimilarityList.add(calDevideSimilarity(regularResult.getAgentStatus(),randomResult.getTerms()));
-        agentDecideSimilarityList.add(calDevideSimilarity(scale_freeResult.getAgentStatus(),randomResult.getTerms()));
-        agentDecideSimilarityList.add(calDevideSimilarity(small_worldResult.getAgentStatus(),randomResult.getTerms()));
-
-
-        List<String> output = new ArrayList<String>();
-        DecimalFormat df = new DecimalFormat("0.00");
-        for(int i=0;i<agentDecideSimilarityList.get(0).length;i++){
-            String temp = new String();
-            for(double[] list:agentDecideSimilarityList){
-                temp = temp+ df.format(list[i])+",";
-            }
-            output.add(temp);
-        }
-        IOHelper.writeToFile("DecideSimilarity_"+outputFile+".txt",output);
     }
 
     private double[] calDevideSimilarity(int[] agentStatus,int total){
@@ -78,7 +65,7 @@ public class DiffusionSpeedExperiment {
 
     private double calDecideSimilarity(int decide,int total){
         double result = 0.0;
-        result =(Math.pow(decide-total/2,2)*4)/Math.pow(total,2); ;
+        result =(Math.pow(decide-total/2,2)*4)/Math.pow(total,2);
         return result;
     }
 
@@ -87,44 +74,36 @@ public class DiffusionSpeedExperiment {
         MultiDiffusionResult regularResult = regular.startMultiDiffusion(startPercentage,startValue,round,expRound);
         MultiDiffusionResult scale_freeResult = scale_free.startMultiDiffusion(startPercentage,startValue,round,expRound);
         MultiDiffusionResult small_worldResult = small_world.startMultiDiffusion(startPercentage,startValue,round,expRound);
+        MultiDiffusionResult twitterResult = twitter.startMultiDiffusion(startPercentage,startValue,round,expRound);
 
         MultiDiffusionResult[] temp = new MultiDiffusionResult[networkNumber];
         temp[0]=randomResult;
         temp[1]=regularResult;
         temp[2]=scale_freeResult;
         temp[3]=small_worldResult;
+        temp[4]=twitterResult;
 
-        int maxRound = 0;
-        for(MultiDiffusionResult diffusionResult:temp){
-            if(diffusionResult.getMaxDiffusionRound()>maxRound){
-                maxRound=diffusionResult.getMaxDiffusionRound();
-            }
-        }
+        Util.writeMultiDiffusionResultToFile(temp,outputFile+"_Diffusion");
 
+        List<double[]> agentDecideSimilarityList = new ArrayList<>();
+        agentDecideSimilarityList.add(calDevideSimilarity(randomResult.getAgentStatus(),randomResult.getTerms()));
+        agentDecideSimilarityList.add(calDevideSimilarity(regularResult.getAgentStatus(),randomResult.getTerms()));
+        agentDecideSimilarityList.add(calDevideSimilarity(scale_freeResult.getAgentStatus(),randomResult.getTerms()));
+        agentDecideSimilarityList.add(calDevideSimilarity(small_worldResult.getAgentStatus(),randomResult.getTerms()));
+        agentDecideSimilarityList.add(calDevideSimilarity(twitterResult.getAgentStatus(),twitterResult.getTerms()));
+
+        List<String> output = new ArrayList<String>();
         DecimalFormat df = new DecimalFormat("0.00");
-        List<String> termOutput = new ArrayList<String>();
-        List<String> totalOutput = new ArrayList<String>();
-        double[] total = new double[networkNumber];
-        for(int i=0;i<maxRound;i++){
-            double[] perTerm = new double[networkNumber];
-            //for(DiffusionResult diffusionResult:temp){
-            for(int j=0;j<networkNumber;j++){
-                MultiDiffusionResult diffusionResult = temp[j];
-                if(i<diffusionResult.getMaxDiffusionRound()){
-                    perTerm[j]=diffusionResult.getAverageDiffusePerTerm(i);
-                    total[j]+=perTerm[j];
-                }else{
-                    perTerm[j]=0;
-                }
+        for(int i=0;i<agentDecideSimilarityList.get(0).length;i++){
+            String temple = new String();
+            for(double[] list:agentDecideSimilarityList){
+                temple = temple+ df.format(list[i])+",";
             }
-            String termOut = df.format(perTerm[0])+","+df.format(perTerm[1])+","+df.format(perTerm[2])+","+df.format(perTerm[3]);
-            String totalOut = df.format(total[0])+","+df.format(total[1])+","+df.format(total[2])+","+df.format(total[3]);
-            termOutput.add(termOut);
-            totalOutput.add(totalOut);
+            output.add(temple);
         }
-
-        IOHelper.writeToFile("term_"+outputFile,termOutput);
-        IOHelper.writeToFile("total_"+outputFile,totalOutput);
+        IOHelper.writeToFile(outputFile+"_DecideSimilarity.txt",output);
     }
+
+
 
 }

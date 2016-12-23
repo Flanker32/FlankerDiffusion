@@ -255,4 +255,8 @@ public class Network {
 
         return result;
     }
+
+    public int getEdgeCount() {
+        return edgeCount;
+    }
 }

@@ -1,5 +1,6 @@
 package edu.nju.software.network.datagenerator;
 
+import edu.nju.software.Constant;
 import edu.nju.software.Util;
 import edu.nju.software.bean.AgentData;
 import edu.nju.software.bean.EdgeData;
@@ -55,7 +56,7 @@ public class NetworkDataFactory {
                 return null;
         }
         List<EdgeData> edges = generateEdges(networkGraph);
-        List<AgentData> agents = generateAgents(networkGraph);
+        List<AgentData> agents = generateAgents(networkGraph,networkParameter);
 
         return new NetworkData(agents,edges);
     }
@@ -126,14 +127,20 @@ public class NetworkDataFactory {
         }
     }
 
-    static List<AgentData> generateAgents(Graph network) {
+    static List<AgentData> generateAgents(Graph network,NetworkParameter networkParameter) {
         Collection<Integer> vertices = network.getVertices();
         List<AgentData> agentDatas = new ArrayList<AgentData>();
         double[] weightArray = new double[network.getVertexCount()];
 
+        double averageWeight = 3;
+        double edgeAverageWeight = Constant.EDGE_AVERAGE_WEIGHT;
+        double averageEdgeNumber = networkParameter.getEdgeNumber()/networkParameter.getAgentNumber();
+        double averageThreshold = edgeAverageWeight*averageWeight*averageEdgeNumber*Constant.THRESHOLD_AVERAGE_PERCENTAGE;
+
         createVertexWeight(network.getVertexCount(), weightArray);
         for (Integer v : vertices) {
-            double threshold = createVertexThreshold(); //the threshold of vertex
+//            double threshold = createVertexThreshold(); //the threshold of vertex
+            double threshold = Util.generagePositiveNormalValue(averageThreshold,1);
             double weight = weightArray[v.intValue() - 1];
             AgentData agent = new AgentData();
             agent.setId(v.intValue());
@@ -148,16 +155,18 @@ public class NetworkDataFactory {
         //handle edge
         Collection<Integer> edges = network.getEdges();
         List<EdgeData> edgeList = new ArrayList<EdgeData>();
+        double edgeAverageWeight = Constant.EDGE_AVERAGE_WEIGHT;
+        double edgeAverageWeightVariance = Constant.EDGE_AVERAGE_WEIGHT_VARIANCE;
 
         for (Integer e : edges) {
             Pair edgeEndpoints = network.getEndpoints(e);
             Object firstElement = edgeEndpoints.getFirst();
             Object secondElement = edgeEndpoints.getSecond();
 
-            double random = Math.random();
-            double edgeWeight=Math.random()*(10-1)+1; //the weight of edge
+            double edgeWeight=Util.generagePositiveNormalValue(edgeAverageWeight,edgeAverageWeightVariance);
+                    //Math.random()*(10-1)+1; //the weight of edge
             EdgeData edge = null;
-            if(random<probability){
+            if(Math.random()<probability){
                 edge= new EdgeData();
                 edge.setStart(Integer.parseInt(firstElement.toString()));
                 edge.setEnd(Integer.parseInt(secondElement.toString()));

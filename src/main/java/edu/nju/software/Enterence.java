@@ -89,13 +89,12 @@ public class Enterence {
         NetworkParameter networkParameter = new NetworkParameter();
         networkParameter.setBinary(true);
 //        networkParameter.setNetworkType(NetworkType.Regular);
-        networkParameter.setStrategyType(StrategyType.DetThr);
+        networkParameter.setStrategyType(StrategyType.ProThr);
         networkParameter.setAgentNumber(5000);
         networkParameter.setEdgeNumber(25000);
-//        networkParameter.setNetworkType(NetworkType.Regular);
 
-        DiffusionSpeedExperiment experiment = new DiffusionSpeedExperiment(networkParameter,"DetThr",100);
-        experiment.tongyiExperiment(0.01,1,100);
+        DiffusionSpeedExperiment experiment = new DiffusionSpeedExperiment(networkParameter,networkParameter.getStrategyType().toString(),100);
+        experiment.diffusionExperiment(0.01,1,1000);
 
     }
 
