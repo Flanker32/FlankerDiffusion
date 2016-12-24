@@ -24,23 +24,28 @@ public class ModelSimilarityExperiment {
 
 
     public void experiment(double startPercentage, double startValue,int maxRound,int expRound){
-        network.changeAgentDetermineStragy(StrategyType.DetThr,true);
-        singleExperiment(startPercentage,startValue,maxRound,expRound,"DetThe");
+//        network.changeAgentDetermineStragy(StrategyType.DetThr,true);
+//        singleExperiment(startValue,maxRound,expRound,"DetThe");
         network.changeAgentDetermineStragy(StrategyType.ProThr,true);
-        singleExperiment(startPercentage,startValue,maxRound,expRound,"ProThr");
-        network.changeAgentDetermineStragy(StrategyType.DetAvg,true);
-        singleExperiment(startPercentage,startValue,maxRound,expRound,"DetAvg");
-        network.changeAgentDetermineStragy(StrategyType.ProAvg,true);
-        singleExperiment(startPercentage,startValue,maxRound,expRound,"ProAvg");
+        singleExperiment(startValue,maxRound,expRound,"ProThr");
+//        network.changeAgentDetermineStragy(StrategyType.DetAvg,true);
+//        singleExperiment(startPercentage,startValue,maxRound,expRound,"DetAvg");
+//        network.changeAgentDetermineStragy(StrategyType.ProAvg,true);
+//        singleExperiment(startPercentage,startValue,maxRound,expRound,"ProAvg");
     }
 
-    private void singleExperiment(double startPercentage, double startValue,int maxRound,int expRound,String name){
+    private void singleExperiment(double startValue,int maxRound,int expRound,String name){
         int point = (int)(network.getSize()*Math.random());
         List<Agent> list = network.calSimilarityPoints(point);
 
         int[] first = new int[AGENT_NUMBER];
         int[] second = new int[AGENT_NUMBER];
         int[] third = new int[AGENT_NUMBER];
+
+        int[] firstSub = new int[AGENT_NUMBER-1];
+        int[] secondSub = new int[AGENT_NUMBER-1];
+        int[] thirdSub = new int[AGENT_NUMBER-1];
+
 
         int firstCount = 0;
         int secondCount = 0;
@@ -49,26 +54,60 @@ public class ModelSimilarityExperiment {
             switch(i%3){
                 case 0:
                     first[firstCount++]=list.get(i).getId();
+                    if(firstCount!=1){
+                        firstSub[firstCount-2]=list.get(i).getId();
+                    }
                     break;
                 case 1:
                     second[secondCount++]=list.get(i).getId();
+                    if(secondCount!=1){
+                        secondSub[secondCount-2]=list.get(i).getId();
+                    }
                     break;
                 case 2:
                     third[thirdCount++]=list.get(i).getId();
+                    if(thirdCount!=1){
+                        thirdSub[thirdCount-2]=list.get(i).getId();
+                    }
                     break;
                 default:
                     break;
             }
         }
 
+        Util.showIntList(first);
+        Util.showIntList(second);
+        Util.showIntList(third);
+
+        Util.showIntList(firstSub);
+        Util.showIntList(secondSub);
+        Util.showIntList(thirdSub);
+
+
         MultiDiffusionResult[] resultList = new MultiDiffusionResult[GROUP_NUMBER];
         MultiDiffusionResult firstResult = network.startMultiDiffusion(first,startValue,maxRound,expRound);
-        MultiDiffusionResult secondResult = network.startMultiDiffusion(first,startValue,maxRound,expRound);
-        MultiDiffusionResult thirdResult = network.startMultiDiffusion(first,startValue,maxRound,expRound);
+        System.out.println("Finish 1~");
+        MultiDiffusionResult secondResult = network.startMultiDiffusion(second,startValue,maxRound,expRound);
+        System.out.println("Finish 2~");
+        MultiDiffusionResult thirdResult = network.startMultiDiffusion(third,startValue,maxRound,expRound);
+        System.out.println("Finish 3~");
         resultList[0]=firstResult;
         resultList[1]=secondResult;
         resultList[2]=thirdResult;
 
         Util.writeMultiDiffusionResultToFile(resultList,"ModelSimilarity_"+name);
+
+
+        firstResult = network.startMultiDiffusion(firstSub,startValue,maxRound,expRound);
+        System.out.println("Finish 4~");
+        secondResult = network.startMultiDiffusion(secondSub,startValue,maxRound,expRound);
+        System.out.println("Finish 5~");
+        thirdResult = network.startMultiDiffusion(thirdSub,startValue,maxRound,expRound);
+        System.out.println("Finish 6~");
+        resultList[0]=firstResult;
+        resultList[1]=secondResult;
+        resultList[2]=thirdResult;
+
+        Util.writeMultiDiffusionResultToFile(resultList,"ModelSimilarityAdvance_"+name);
     }
 }

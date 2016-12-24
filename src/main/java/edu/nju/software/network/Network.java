@@ -192,6 +192,7 @@ public class Network {
 
     //计算所有Agent与指定id Agent的相似程度，并按照顺序返回
     public List<Agent> calSimilarityPoints(int number) {
+        System.setProperty("java.util.Arrays.useLegacyMergeSort", "true");
         LinkedList<Agent> result = new LinkedList<Agent>();
         for(Agent agent:agents.values()){
             result.add(agent);

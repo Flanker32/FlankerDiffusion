@@ -70,4 +70,10 @@ public class Util {
     }
 
 
+    public static void showIntList(int[] list){
+        for(int i:list){
+            System.out.print(i+" ");
+        }
+        System.out.println();
+    }
 }
