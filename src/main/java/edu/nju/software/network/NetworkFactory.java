@@ -2,13 +2,12 @@ package edu.nju.software.network;
 
 import edu.nju.software.IOHelper;
 import edu.nju.software.agent.Agent;
-import edu.nju.software.agent.AgentFactory;
+import edu.nju.software.agent.SimpleAgentFactory;
 import edu.nju.software.agent.StrategyType;
 import edu.nju.software.bean.*;
 import edu.nju.software.network.datagenerator.NetworkDataFactory;
 
 import java.io.*;
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -27,7 +26,7 @@ public class NetworkFactory {
             agentParameter.setThreshold(agent.getThreshold());
             agentParameter.setWeight(agent.getWeight());
             agentParameter.setType(networkParameter.getStrategyType());
-            network.addAgent(AgentFactory.newAgent(agentParameter));
+            network.addAgent(SimpleAgentFactory.newAgent(agentParameter));
         }
 
         for(EdgeData edge:edgeDatas){
@@ -45,7 +44,7 @@ public class NetworkFactory {
             agentParameter.setWeight(5);
             agentParameter.setThreshold(20);
             agentParameter.setBinary(networkParameter.isBinary());
-            network.addAgent(AgentFactory.newAgent(agentParameter));
+            network.addAgent(SimpleAgentFactory.newAgent(agentParameter));
         }
 
         int lineCode= 0;
@@ -101,7 +100,7 @@ public class NetworkFactory {
             int threshold = Integer.valueOf(temple[2]);
 //            int weight = Integer.valueOf(5);
 //            int threshold = Integer.valueOf(30);
-            Agent temp = AgentFactory.newAgent(id, weight, threshold, isBinary, type);
+            Agent temp = SimpleAgentFactory.newAgent(id, weight, threshold, isBinary, type);
             network.addAgent(temp);
         }
         for (String s : edges) {
@@ -133,7 +132,7 @@ public class NetworkFactory {
                 int weight = Integer.valueOf(temple[1]);
                 int threshold = Integer.valueOf(temple[2]);
 
-                Agent temp = AgentFactory.newAgent(id, weight, threshold, networkParameter.isBinary(), networkParameter.getStrategyType());
+                Agent temp = SimpleAgentFactory.newAgent(id, weight, threshold, networkParameter.isBinary(), networkParameter.getStrategyType());
                 network.addAgent(temp);
                 count++;
             }
