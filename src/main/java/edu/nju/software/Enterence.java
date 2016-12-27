@@ -89,7 +89,7 @@ public class Enterence {
     public static void main(String[] args) {
         NetworkParameter networkParameter = new NetworkParameter();
         networkParameter.setBinary(true);
-        networkParameter.setNetworkType(NetworkType.Regular);
+        networkParameter.setNetworkType(NetworkType.SmallWorld);
         networkParameter.setStrategyType(StrategyType.ProThr);
         networkParameter.setAgentNumber(5000);
         networkParameter.setEdgeNumber(25000);
@@ -97,7 +97,7 @@ public class Enterence {
 //        DiffusionSpeedExperiment experiment = new DiffusionSpeedExperiment(networkParameter,networkParameter.getStrategyType().toString(),100);
 //        experiment.diffusionExperiment(0.01,1,1000);
         ModelSimilarityExperiment experiment = new ModelSimilarityExperiment(networkParameter);
-        experiment.experiment(0.01,1,1000,100);
+        experiment.experiment(0.01,1,100,100);
 
     }
 
