@@ -97,7 +97,7 @@ public class Enterence {
 //        DiffusionSpeedExperiment experiment = new DiffusionSpeedExperiment(networkParameter,networkParameter.getStrategyType().toString(),100);
 //        experiment.diffusionExperiment(0.01,1,1000);
         ModelSimilarityExperiment experiment = new ModelSimilarityExperiment(networkParameter);
-        experiment.experiment(0.01,1,100,100);
+        experiment.experiment(0.01,1,100,1);
 
     }
 

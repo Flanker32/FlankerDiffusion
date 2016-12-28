@@ -1,6 +1,7 @@
-package edu.nju.software.agent;
+package edu.nju.software.agent.impl;
 
 import edu.nju.software.Util;
+import edu.nju.software.agent.Agent;
 import edu.nju.software.agent.determine.AgentDetermineStragy;
 
 import java.util.HashMap;
@@ -8,7 +9,7 @@ import java.util.HashMap;
 /**
  * Created by Dell on 2016/11/26.
  */
-public class SimpleAgent implements  Agent{
+public class SimpleAgent implements Agent {
     static final double DEFAULT_THRESHOLD_MEAN = 0.5;
     static final double DEFAULT_THRESHOLD_VARIANCE = 1;
 

@@ -1,20 +1,13 @@
 package edu.nju.software.agent;
 
 import edu.nju.software.agent.determine.*;
+import edu.nju.software.agent.impl.SimpleAgent;
 import edu.nju.software.bean.AgentParameter;
 
 /**
  * Created by Dell on 2016/12/1.
  */
 public class SimpleAgentFactory {
-//    private static SimpleAgentFactory agentFactory = null;
-//
-//    public static SimpleAgentFactory getAgentFactoryInstance() {
-//        if (agentFactory == null) {
-//            agentFactory = new SimpleAgentFactory();
-//        }
-//        return agentFactory;
-//    }
 
     public static Agent newAgent(AgentParameter agentParameter){
         int id = agentParameter.getId();

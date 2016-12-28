@@ -6,6 +6,7 @@ import edu.nju.software.agent.SimpleAgentFactory;
 import edu.nju.software.agent.StrategyType;
 import edu.nju.software.bean.*;
 import edu.nju.software.network.datagenerator.NetworkDataFactory;
+import edu.nju.software.network.impl.SimpleNetwork;
 
 import java.io.*;
 import java.util.List;
@@ -17,7 +18,7 @@ public class NetworkFactory {
 
     public static Network generateNetwork(NetworkParameter networkParameter){
         NetworkData data = NetworkDataFactory.generate(networkParameter);
-        Network network = new Network();
+        Network network = new SimpleNetwork();
         List<AgentData> agentDatas = data.getAgents();
         List<EdgeData> edgeDatas = data.getEdges();
         for(AgentData agent:agentDatas){
@@ -37,7 +38,7 @@ public class NetworkFactory {
     }
 
     public static Network readSouthEaseNetworkFromFile(int number,int maxThreshold,String file,NetworkParameter networkParameter){
-        Network network = new Network();
+        Network network = new SimpleNetwork();
         for(int i=0;i<number;i++){
             AgentParameter agentParameter = new AgentParameter(i);
             agentParameter.setType(networkParameter.getStrategyType());
@@ -84,7 +85,7 @@ public class NetworkFactory {
     }
 
     public static Network readNetworkFromFile(String nodeFile, String edgeFile, boolean isBinary, StrategyType type) {
-        Network network = new Network();
+        Network network = new SimpleNetwork();
 
         List<String> agent = IOHelper.readFileByLine(nodeFile);
         List<String> edges = IOHelper.readFileByLine(edgeFile);
@@ -116,7 +117,7 @@ public class NetworkFactory {
     }
 
     public static Network readBigNetworkFromFile(String nodeFile, String edgeFile,NetworkParameter networkParameter,int maxNumber){
-        Network network = new Network();
+        Network network = new SimpleNetwork();
 
         File file = new File(nodeFile);
         FileInputStream fis = null;
