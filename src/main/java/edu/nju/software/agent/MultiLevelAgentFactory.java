@@ -1,13 +1,25 @@
 package edu.nju.software.agent;
 
 import edu.nju.software.agent.determine.*;
-import edu.nju.software.agent.impl.MultiLevelAgent;
+import edu.nju.software.agent.impl.MultiLevelNode;
+import edu.nju.software.bean.AgentData;
 import edu.nju.software.bean.AgentParameter;
+import edu.nju.software.bean.NetworkParameter;
 
 /**
  * Created by Dell on 2016/12/28.
  */
 public class MultiLevelAgentFactory {
+
+    public static MultiLevelAgentInterface newMultiLevelAgent(NetworkParameter networkParameter, AgentData agent){
+        AgentParameter agentParameter = new AgentParameter(agent.getId());
+        agentParameter.setBinary(networkParameter.isBinary());
+        agentParameter.setThreshold(agent.getThreshold());
+        agentParameter.setWeight(agent.getWeight());
+        agentParameter.setType(networkParameter.getStrategyType());
+        return newMultiLevelAgent(agentParameter);
+    }
+
     public static MultiLevelAgentInterface newMultiLevelAgent(AgentParameter agentParameter){
         int id = agentParameter.getId();
         double weight = agentParameter.getWeight();
@@ -35,6 +47,6 @@ public class MultiLevelAgentFactory {
             default:
                 return null;
         }
-        return new MultiLevelAgent(id, stragy, weight, threshold);
+        return new MultiLevelNode(id, stragy, weight, threshold);
     }
 }
