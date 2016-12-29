@@ -1,35 +1,58 @@
 package edu.nju.software.agent.impl;
 
-import edu.nju.software.agent.Agent;
-import edu.nju.software.agent.MultiLevelAgentInterface;
-import edu.nju.software.agent.determine.AgentDetermineStragy;
+import edu.nju.software.agent.impl.MultiLevelNode;
 
-import java.util.HashMap;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
- * Created by Dell on 2016/12/28.
+ * Created by Dell on 2016/12/29.
  */
-public class MultiLevelAgent extends SimpleAgent implements MultiLevelAgentInterface {
-    private HashMap<Agent,Double> otherLevelInput = new HashMap<>();
-    private HashMap<Agent,Double> otherLevelOutput = new HashMap<>();
+public class MultiLevelAgent {
 
-    public MultiLevelAgent(int id, AgentDetermineStragy agentDetermineStragy) {
-        super(id, agentDetermineStragy);
+    private int agentId;
+    private boolean isCrossLevelAgent = false;
+    private List<MultiLevelNode> nodes = new ArrayList<>();
+
+    public MultiLevelAgent(int agentId) {
+        this.agentId = agentId;
     }
 
-    public MultiLevelAgent(int id, AgentDetermineStragy agentDetermineStragy, double weight, double threshold) {
-        super(id, agentDetermineStragy, weight, threshold);
+    public MultiLevelAgent(int agentId, boolean isCrossLevelAgent, List<MultiLevelNode> nodes) {
+        this.agentId = agentId;
+        this.isCrossLevelAgent = isCrossLevelAgent;
+        this.nodes = nodes;
     }
 
-    @Override
-    public boolean addOtherLevelInput(Agent agent,double weight) {
-        otherLevelInput.put(agent,weight);
-        return true;
+    public int getAgentId() {
+        return agentId;
     }
 
-    @Override
-    public boolean addOtherLevelOutput(Agent agent,double weight) {
-        otherLevelOutput.put(agent,weight);
-        return true;
+    public void setAgentId(int agentId) {
+        this.agentId = agentId;
+    }
+
+    public boolean isCrossLevelAgent() {
+        return isCrossLevelAgent;
+    }
+
+    public void setCrossLevelAgent(boolean crossLevelAgent) {
+        isCrossLevelAgent = crossLevelAgent;
+    }
+
+    public List<MultiLevelNode> getNodes() {
+        return nodes;
+    }
+
+    public void setNodes(List<MultiLevelNode> nodes) {
+        this.nodes = nodes;
+    }
+
+    public void addNode(MultiLevelNode node){
+        this.nodes.add(node);
+    }
+
+    public int getNodeCount(){
+        return this.nodes.size();
     }
 }

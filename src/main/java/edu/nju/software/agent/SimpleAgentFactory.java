@@ -2,7 +2,9 @@ package edu.nju.software.agent;
 
 import edu.nju.software.agent.determine.*;
 import edu.nju.software.agent.impl.SimpleAgent;
+import edu.nju.software.bean.AgentData;
 import edu.nju.software.bean.AgentParameter;
+import edu.nju.software.bean.NetworkParameter;
 
 /**
  * Created by Dell on 2016/12/1.
@@ -16,6 +18,15 @@ public class SimpleAgentFactory {
         boolean isBinary = agentParameter.isBinary();
         StrategyType strategyType = agentParameter.getType();
         return newAgent(id,weight,threshold,isBinary,strategyType);
+    }
+
+    public static Agent newAgent(NetworkParameter networkParameter, AgentData agent){
+        AgentParameter agentParameter = new AgentParameter(agent.getId());
+        agentParameter.setBinary(networkParameter.isBinary());
+        agentParameter.setThreshold(agent.getThreshold());
+        agentParameter.setWeight(agent.getWeight());
+        agentParameter.setType(networkParameter.getStrategyType());
+        return newAgent(agentParameter);
     }
 
     public static Agent newAgent(int id, double weight, double threshold, boolean isBinary, StrategyType type) {

@@ -8,14 +8,8 @@ package edu.nju.software;
 public class Constant {
     public static boolean DEBUG_MODE = true;
 
-    public static String randomEdge = "random_edges.txt";
-    public static String randomNode = "random_nodes.txt";
-    public static String regularEdge = "regular_edges.txt";
-    public static String regularNode = "regular_nodes.txt";
-    public static String scaleFreeEdge = "scale_free_edges.txt";
-    public static String scaleFreeNode = "scale_free_nodes.txt";
-    public static String smallWorldEdge = "small_world_edges.txt";
-    public static String smallWorldNode = "small_world_nodes.txt";
+    public static String trueEdge = "twitter_edges.txt";
+    public static String trueNode = "twitter_nodes.txt";
 
     public static final double EDGE_AVERAGE_WEIGHT = 5;
     public static final double EDGE_AVERAGE_WEIGHT_VARIANCE = 1;

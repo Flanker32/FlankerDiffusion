@@ -111,7 +111,7 @@ public class SimpleNetwork implements Network {
         return analyzeMultiDiffusionResult(results,maxDiffuseRound,expTimes);
     }
 
-    public MultiDiffusionResult analyzeMultiDiffusionResult(List<DiffusionResult> results ,int maxDiffuseRound,int expTimes){
+    protected MultiDiffusionResult analyzeMultiDiffusionResult(List<DiffusionResult> results ,int maxDiffuseRound,int expTimes){
         MultiDiffusionResult result = new MultiDiffusionResult(expTimes);
         result.setAgentCount(getSize());
         result.setEdgeCount(edgeCount);
