@@ -32,4 +32,5 @@ public interface Network {
      void changeAgentWeight(double mean,double variance);
      void changeAgentThreshold(double mean,double variance);
      void changeAgentDetermineStragy(StrategyType strategyType, boolean isBinary);
+     void debug();
 }

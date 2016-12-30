@@ -7,5 +7,6 @@ public enum NetworkType {
     Regular,
     Random,
     SmallWorld,
-    ScaleFree
+    ScaleFree,
+    REAL
 }

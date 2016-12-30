@@ -1,8 +1,9 @@
 package edu.nju.software.agent.impl;
 
-import edu.nju.software.agent.impl.MultiLevelNode;
+import edu.nju.software.agent.MultiLevelNode;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 /**
@@ -12,16 +13,25 @@ public class MultiLevelAgent {
 
     private int agentId;
     private boolean isCrossLevelAgent = false;
-    private List<MultiLevelNode> nodes = new ArrayList<>();
+    private boolean isActived = false;
+    private HashMap<MultiLevelNode,Integer> nodes = new HashMap<>();
 
     public MultiLevelAgent(int agentId) {
         this.agentId = agentId;
     }
 
-    public MultiLevelAgent(int agentId, boolean isCrossLevelAgent, List<MultiLevelNode> nodes) {
+    public MultiLevelAgent(int agentId, boolean isCrossLevelAgent, HashMap<MultiLevelNode,Integer> nodes) {
         this.agentId = agentId;
         this.isCrossLevelAgent = isCrossLevelAgent;
         this.nodes = nodes;
+    }
+
+    public boolean isActived() {
+        return isActived;
+    }
+
+    public void setActived(boolean actived) {
+        isActived = actived;
     }
 
     public int getAgentId() {
@@ -40,16 +50,16 @@ public class MultiLevelAgent {
         isCrossLevelAgent = crossLevelAgent;
     }
 
-    public List<MultiLevelNode> getNodes() {
+    public HashMap<MultiLevelNode,Integer> getNodes() {
         return nodes;
     }
 
-    public void setNodes(List<MultiLevelNode> nodes) {
+    public void setNodes(HashMap<MultiLevelNode,Integer> nodes) {
         this.nodes = nodes;
     }
 
-    public void addNode(MultiLevelNode node){
-        this.nodes.add(node);
+    public void addNode(MultiLevelNode node,int networkId){
+        this.nodes.put(node,networkId);
     }
 
     public int getNodeCount(){

@@ -15,7 +15,7 @@ import static edu.nju.software.agent.StrategyType.*;
 /**
  * Created by Dell on 2016/11/26.
  */
-public class SimpleNetwork implements Network {
+public class NetworkImpl implements Network {
 
     private int edgeCount = 0;
     private int diffusionRound = 0;
@@ -49,18 +49,12 @@ public class SimpleNetwork implements Network {
 
     //指定初始节点，初始值，传播轮数进行扩散
     public DiffusionResult startDiffusion(int[] startAgents, double startvalue, int round) {
-        // 第一轮传播
         int agentCount = getSize();
         DiffusionResult diffusionResult = new DiffusionResult(agentCount, edgeCount, round);
         diffusionResult.setDiffusionRound(round);// set diffusion round max at first.
 
-        for (int agentId : startAgents) {
-            Agent agent = agents.get(agentId);
-            if (agent != null) {
-                agent.diffuseFirstTime(startvalue);
-                activedAgentNumber++;
-            }
-        }
+        // 第一轮传播
+        startFirstRoundDiffusion(startAgents,startvalue);
 
         for (int i = 1; i <= round; i++) {
             List<Agent> activedAgents = getActivedAgents();
@@ -144,6 +138,16 @@ public class SimpleNetwork implements Network {
         result.setAverageDiffusePerTerm(averageDiffusePerTerm);
         result.setMaxDiffusionRound(maxDiffuseRound);
         return result;
+    }
+
+    protected void startFirstRoundDiffusion(int[] startAgents,double startvalue){
+        for (int agentId : startAgents) {
+            Agent agent = agents.get(agentId);
+            if (agent != null) {
+                agent.diffuseFirstTime(startvalue);
+                activedAgentNumber++;
+            }
+        }
     }
 
     protected List<Agent> getActivedAgents() {
@@ -287,5 +291,15 @@ public class SimpleNetwork implements Network {
 
     public int getEdgeCount() {
         return edgeCount;
+    }
+
+    public void debug(){
+        for(Agent agent:agents.values()){
+            System.out.print(agent.getId()+":");
+            for(Agent agent1:agent.getAfterAgent().keySet()){
+                System.out.print(agent1.getId()+" ");
+            }
+            System.out.println();
+        }
     }
 }

@@ -1,7 +1,7 @@
 package edu.nju.software.agent;
 
 import edu.nju.software.agent.determine.*;
-import edu.nju.software.agent.impl.SimpleAgent;
+import edu.nju.software.agent.impl.AgentImpl;
 import edu.nju.software.bean.AgentData;
 import edu.nju.software.bean.AgentParameter;
 import edu.nju.software.bean.NetworkParameter;
@@ -45,24 +45,24 @@ public class SimpleAgentFactory {
     }
 
     public static Agent newDetAvgAgent(int id, double weight, double threshold, boolean isBinary) {
-        return new SimpleAgent(id, new DeterministicAverageDecisionStragy(isBinary), weight, threshold);
+        return new AgentImpl(id, new DeterministicAverageDecisionStragy(isBinary), weight, threshold);
     }
 
     public static Agent newDetThrAgent(int id, double weight, double threshold, boolean isBinary) {
-        return new SimpleAgent(id, new DeterministicThresholdDecisionStragy(isBinary), weight, threshold);
+        return new AgentImpl(id, new DeterministicThresholdDecisionStragy(isBinary), weight, threshold);
     }
 
     public static Agent newProAvgAgent(int id, double weight, double threshold, boolean isBinary) {
-        return new SimpleAgent(id, new ProbabilisticAverageDecisionStragy(isBinary), weight, threshold);
+        return new AgentImpl(id, new ProbabilisticAverageDecisionStragy(isBinary), weight, threshold);
     }
 
     public static Agent newProThrAgent(int id, double weight, double threshold, boolean isBinary) {
         double probablity = Math.random();
 
-        return new SimpleAgent(id, new ProbabilisticThresholdDecisionStragy(isBinary, probablity), weight, threshold);
+        return new AgentImpl(id, new ProbabilisticThresholdDecisionStragy(isBinary, probablity), weight, threshold);
     }
 
     public static Agent newProThrAgent(int id, double weight, double threshold, boolean isBinary, double probablity) {
-        return new SimpleAgent(id, new ProbabilisticThresholdDecisionStragy(isBinary, probablity), weight, threshold);
+        return new AgentImpl(id, new ProbabilisticThresholdDecisionStragy(isBinary, probablity), weight, threshold);
     }
 }

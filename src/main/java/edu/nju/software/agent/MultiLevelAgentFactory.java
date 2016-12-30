@@ -1,7 +1,7 @@
 package edu.nju.software.agent;
 
 import edu.nju.software.agent.determine.*;
-import edu.nju.software.agent.impl.MultiLevelNode;
+import edu.nju.software.agent.impl.MultiLevelNodeImpl;
 import edu.nju.software.bean.AgentData;
 import edu.nju.software.bean.AgentParameter;
 import edu.nju.software.bean.NetworkParameter;
@@ -11,7 +11,7 @@ import edu.nju.software.bean.NetworkParameter;
  */
 public class MultiLevelAgentFactory {
 
-    public static MultiLevelAgentInterface newMultiLevelAgent(NetworkParameter networkParameter, AgentData agent){
+    public static MultiLevelNode newMultiLevelAgent(NetworkParameter networkParameter, AgentData agent){
         AgentParameter agentParameter = new AgentParameter(agent.getId());
         agentParameter.setBinary(networkParameter.isBinary());
         agentParameter.setThreshold(agent.getThreshold());
@@ -20,7 +20,7 @@ public class MultiLevelAgentFactory {
         return newMultiLevelAgent(agentParameter);
     }
 
-    public static MultiLevelAgentInterface newMultiLevelAgent(AgentParameter agentParameter){
+    public static MultiLevelNode newMultiLevelAgent(AgentParameter agentParameter){
         int id = agentParameter.getId();
         double weight = agentParameter.getWeight();
         double threshold = agentParameter.getThreshold();
@@ -29,7 +29,7 @@ public class MultiLevelAgentFactory {
         return newMultiLevelAgent(id,weight,threshold,isBinary,strategyType);
     }
 
-    public static MultiLevelAgentInterface newMultiLevelAgent(int id, double weight, double threshold, boolean isBinary, StrategyType type) {
+    public static MultiLevelNode newMultiLevelAgent(int id, double weight, double threshold, boolean isBinary, StrategyType type) {
         AgentDetermineStragy stragy = null;
         switch (type) {
             case DetAvg:
@@ -47,6 +47,6 @@ public class MultiLevelAgentFactory {
             default:
                 return null;
         }
-        return new MultiLevelNode(id, stragy, weight, threshold);
+        return new MultiLevelNodeImpl(id, stragy, weight, threshold);
     }
 }
