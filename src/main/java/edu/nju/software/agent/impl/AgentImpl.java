@@ -9,26 +9,26 @@ import java.util.HashMap;
 /**
  * Created by Dell on 2016/11/26.
  */
-public class SimpleAgent implements Agent {
+public class AgentImpl implements Agent {
     static final double DEFAULT_THRESHOLD_MEAN = 0.5;
     static final double DEFAULT_THRESHOLD_VARIANCE = 1;
 
     static final double DEFAULT_WEIGHT_MEAN = 1;
     static final double DEFAULT_WEIGHT_VARIANCE = 1;
 
-    private int id;
-    private boolean isActived = false;
+    protected int id;
+    protected boolean isActived = false;
 
-    private int inDegree = 0;
-    private int outDegree = 0;
-    private double weight = 0.0;
-    private double threshold = 0.0;
-    private double output = 0.0;
-    private AgentDetermineStragy agentDetermineStragy = null;
-    private HashMap<Agent, Double> frontAgent = new HashMap<Agent, Double>();
-    private HashMap<Agent, Double> afterAgent = new HashMap<Agent, Double>();
+    protected int inDegree = 0;
+    protected int outDegree = 0;
+    protected double weight = 0.0;
+    protected double threshold = 0.0;
+    protected double output = 0.0;
+    protected AgentDetermineStragy agentDetermineStragy = null;
+    protected HashMap<Agent, Double> frontAgent = new HashMap<Agent, Double>();
+    protected HashMap<Agent, Double> afterAgent = new HashMap<Agent, Double>();
 
-    public SimpleAgent(int id, AgentDetermineStragy agentDetermineStragy) {
+    public AgentImpl(int id, AgentDetermineStragy agentDetermineStragy) {
         this.id = id;
         this.agentDetermineStragy = agentDetermineStragy;
 
@@ -36,7 +36,7 @@ public class SimpleAgent implements Agent {
         this.threshold = Util.generageNormalValue(DEFAULT_THRESHOLD_MEAN, DEFAULT_THRESHOLD_VARIANCE);
     }
 
-    public SimpleAgent(int id, AgentDetermineStragy agentDetermineStragy, double weight, double threshold) {
+    public AgentImpl(int id, AgentDetermineStragy agentDetermineStragy, double weight, double threshold) {
         this(id, agentDetermineStragy);
         this.weight = weight;
         this.threshold = threshold;

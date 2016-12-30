@@ -1,11 +1,13 @@
 package edu.nju.software;
 
 import edu.nju.software.agent.StrategyType;
+import edu.nju.software.bean.DiffusionResult;
 import edu.nju.software.bean.NetworkParameter;
 import edu.nju.software.experiment.DiffusionSpeedExperiment;
 import edu.nju.software.experiment.ModelSimilarityExperiment;
 import edu.nju.software.experiment.ThresholdExperiment;
 import edu.nju.software.network.NetworkType;
+import edu.nju.software.network.impl.ParallelTribleLevelNetwork;
 
 /**
  * Created by Dell on 2016/11/26.
@@ -87,19 +89,51 @@ public class Enterence {
 //    }
 
     public static void main(String[] args) {
-        NetworkParameter networkParameter = new NetworkParameter();
-        networkParameter.setBinary(true);
-        networkParameter.setNetworkType(NetworkType.SmallWorld);
-        networkParameter.setStrategyType(StrategyType.ProThr);
-        networkParameter.setAgentNumber(5000);
-        networkParameter.setEdgeNumber(25000);
+        NetworkParameter first = new NetworkParameter();
+        first.setBinary(true);
+        first.setNetworkType(NetworkType.SmallWorld);
+        first.setStrategyType(StrategyType.DetThr);
+        first.setAgentNumber(1000);
+        first.setEdgeNumber(5000);
 
-//        DiffusionSpeedExperiment experiment = new DiffusionSpeedExperiment(networkParameter,networkParameter.getStrategyType().toString(),100);
-//        experiment.diffusionExperiment(0.01,1,1000);
-        ModelSimilarityExperiment experiment = new ModelSimilarityExperiment(networkParameter);
-        experiment.experiment(0.01,1,100,1);
+        NetworkParameter second = new NetworkParameter();
+        second.setBinary(true);
+        second.setNetworkType(NetworkType.SmallWorld);
+        second.setStrategyType(StrategyType.DetThr);
+        second.setAgentNumber(1000);
+        second.setEdgeNumber(5000);
 
+        NetworkParameter third = new NetworkParameter();
+        third.setBinary(true);
+        third.setNetworkType(NetworkType.SmallWorld);
+        third.setStrategyType(StrategyType.DetThr);
+        third.setAgentNumber(1000);
+        third.setEdgeNumber(2000);
+
+        NetworkParameter[] parameters = new NetworkParameter[3];
+        parameters[0]=first;
+        parameters[1]=second;
+        parameters[2]=third;
+
+        ParallelTribleLevelNetwork network = new ParallelTribleLevelNetwork(parameters,0.5);
+        DiffusionResult result = network.startDiffusion(0.01,1,100);
+        result.debug();
     }
+
+//    public static void main(String[] args) {
+//        NetworkParameter networkParameter = new NetworkParameter();
+//        networkParameter.setBinary(true);
+//        networkParameter.setNetworkType(NetworkType.SmallWorld);
+//        networkParameter.setStrategyType(StrategyType.ProThr);
+//        networkParameter.setAgentNumber(5000);
+//        networkParameter.setEdgeNumber(25000);
+//
+////        DiffusionSpeedExperiment experiment = new DiffusionSpeedExperiment(networkParameter,networkParameter.getStrategyType().toString(),100);
+////        experiment.diffusionExperiment(0.01,1,1000);
+//        ModelSimilarityExperiment experiment = new ModelSimilarityExperiment(networkParameter);
+//        experiment.experiment(0.01,1,100,1);
+//
+//    }
 
 //    public static void main(String[] args) {
 //        NetworkParameter networkParameter = new NetworkParameter();

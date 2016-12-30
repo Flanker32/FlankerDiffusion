@@ -56,4 +56,10 @@ public class DiffusionResult {
     public void setAgentStatus(boolean[] agentStatus) {
         this.agentStatus = agentStatus;
     }
+
+    public void debug(){
+        System.out.println("Diffusion Result: ");
+        System.out.println("Diffusion Round: "+this.diffusionRound);
+        System.out.println("Affected Agent : "+this.affectedAgentCount);
+    }
 }
