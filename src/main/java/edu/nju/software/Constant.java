@@ -13,5 +13,8 @@ public class Constant {
 
     public static final double EDGE_AVERAGE_WEIGHT = 5;
     public static final double EDGE_AVERAGE_WEIGHT_VARIANCE = 1;
-    public static final double THRESHOLD_AVERAGE_PERCENTAGE = 0.3;
+    public static final double THRESHOLD_AVERAGE_PERCENTAGE = 0.2;
+
+    public static final double CROSS_MEAN = 5;
+    public static final double CROSS_VARIANCE = 1;
 }

@@ -6,8 +6,6 @@ import edu.nju.software.agent.SimpleAgentFactory;
 import edu.nju.software.agent.StrategyType;
 import edu.nju.software.bean.*;
 import edu.nju.software.network.datagenerator.NetworkDataFactory;
-import edu.nju.software.network.impl.SimpleNetwork;
-import edu.nju.software.network.impl.SubNetwork;
 import edu.nju.software.network.impl.NetworkImpl;
 import edu.nju.software.network.impl.SubNetworkImpl;
 
@@ -20,14 +18,11 @@ import java.util.List;
  */
 public class NetworkFactory {
 
-    public static SubNetworkInterface generateSubNetwork(NetworkParameter networkParameter) {
-
     public static SubNetwork generateSubNetwork(NetworkParameter networkParameter) {
         if(networkParameter.getNetworkType()==NetworkType.REAL){
             return  generateTrueSubNetwork(networkParameter);
         }
         NetworkData data = NetworkDataFactory.generate(networkParameter);
-        SubNetwork network = new SubNetwork();
         SubNetworkImpl network = new SubNetworkImpl();
 
         List<AgentData> agentDatas = data.getAgents();
@@ -42,13 +37,10 @@ public class NetworkFactory {
         return network;
     }
 
-    public static SubNetworkInterface generateTrueSubNetwork(NetworkParameter networkParameter,int maxNumber){
     public static SubNetwork generateTrueSubNetwork(NetworkParameter networkParameter){
         String nodeFile = Constant.trueNode;
         String edgeFile = Constant.trueEdge;
 
-        SubNetwork network = new SubNetwork();
-        NetworkData data = readDataFromFile(nodeFile, edgeFile, maxNumber);
         SubNetworkImpl network = new SubNetworkImpl();
         NetworkData data = readDataFromFile(nodeFile, edgeFile, networkParameter.getAgentNumber());
         List<AgentData> agentDatas = data.getAgents();
@@ -64,7 +56,6 @@ public class NetworkFactory {
 
     public static Network generateNetwork(NetworkParameter networkParameter) {
         NetworkData data = NetworkDataFactory.generate(networkParameter);
-        Network network = new SimpleNetwork();
         Network network = new NetworkImpl();
         List<AgentData> agentDatas = data.getAgents();
         List<EdgeData> edgeDatas = data.getEdges();
@@ -91,7 +82,6 @@ public class NetworkFactory {
     }
 
     public static Network readBigNetworkFromFile(String nodeFile, String edgeFile, NetworkParameter networkParameter, int maxNumber) {
-        Network network = new SimpleNetwork();
         Network network = new NetworkImpl();
         NetworkData data = readDataFromFile(nodeFile, edgeFile, maxNumber);
         List<AgentData> agentDatas = data.getAgents();
@@ -175,7 +165,6 @@ public class NetworkFactory {
     }
 
     public static Network readSouthEaseNetworkFromFile(int number, int maxThreshold, String file, NetworkParameter networkParameter) {
-        Network network = new SimpleNetwork();
         Network network = new NetworkImpl();
         for (int i = 0; i < number; i++) {
             AgentParameter agentParameter = new AgentParameter(i);

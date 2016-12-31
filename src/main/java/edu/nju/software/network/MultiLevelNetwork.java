@@ -32,6 +32,8 @@ public abstract class MultiLevelNetwork {
         for(int i=0;i<NETWORK_NUMBER;i++){
             networks[i]= NetworkFactory.generateSubNetwork(networkParameter[i]);
         }
+
+        generateCrossLevelAgents(multiPercentage);
     }
 
     protected int generateCrossLevelAgents(double multiPercentage){

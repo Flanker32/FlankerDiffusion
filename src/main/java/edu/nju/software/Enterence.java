@@ -6,7 +6,11 @@ import edu.nju.software.bean.NetworkParameter;
 import edu.nju.software.experiment.DiffusionSpeedExperiment;
 import edu.nju.software.experiment.ModelSimilarityExperiment;
 import edu.nju.software.experiment.ThresholdExperiment;
+import edu.nju.software.network.MultiLevelNetwork;
+import edu.nju.software.network.Network;
 import edu.nju.software.network.NetworkType;
+import edu.nju.software.network.impl.CrossLayerTribleLevelNetwork;
+import edu.nju.software.network.impl.NormalizationTribleLevelNetwork;
 import edu.nju.software.network.impl.ParallelTribleLevelNetwork;
 
 /**
@@ -108,15 +112,17 @@ public class Enterence {
         third.setNetworkType(NetworkType.SmallWorld);
         third.setStrategyType(StrategyType.DetThr);
         third.setAgentNumber(1000);
-        third.setEdgeNumber(2000);
+        third.setEdgeNumber(5000);
 
         NetworkParameter[] parameters = new NetworkParameter[3];
         parameters[0]=first;
         parameters[1]=second;
         parameters[2]=third;
 
-        ParallelTribleLevelNetwork network = new ParallelTribleLevelNetwork(parameters,0.5);
-        DiffusionResult result = network.startDiffusion(0.01,1,100);
+//        MultiLevelNetwork network = new CrossLayerTribleLevelNetwork(parameters,0.5);
+        NormalizationTribleLevelNetwork network = new NormalizationTribleLevelNetwork(parameters,0.3);
+        Network singleNetwork = network.generageSingleLevelNetwork();
+        DiffusionResult result = singleNetwork.startDiffusion(0.01,1,100);
         result.debug();
     }
 
