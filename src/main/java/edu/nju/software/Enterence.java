@@ -3,15 +3,9 @@ package edu.nju.software;
 import edu.nju.software.agent.StrategyType;
 import edu.nju.software.bean.DiffusionResult;
 import edu.nju.software.bean.NetworkParameter;
-import edu.nju.software.experiment.DiffusionSpeedExperiment;
-import edu.nju.software.experiment.ModelSimilarityExperiment;
-import edu.nju.software.experiment.ThresholdExperiment;
-import edu.nju.software.network.MultiLevelNetwork;
 import edu.nju.software.network.Network;
 import edu.nju.software.network.NetworkType;
-import edu.nju.software.network.impl.CrossLayerTribleLevelNetwork;
 import edu.nju.software.network.impl.NormalizationTribleLevelNetwork;
-import edu.nju.software.network.impl.ParallelTribleLevelNetwork;
 
 /**
  * Created by Dell on 2016/11/26.

@@ -7,6 +7,7 @@ import edu.nju.software.agent.determine.*;
 import edu.nju.software.bean.DiffusionResult;
 import edu.nju.software.bean.MultiDiffusionResult;
 import edu.nju.software.network.Network;
+import edu.nju.software.network.NetworkHelper;
 
 import java.util.*;
 
@@ -43,7 +44,7 @@ public class NetworkImpl implements Network {
 
     //指定起始点百分比，初始值，传播轮数进行扩散
     public DiffusionResult startDiffusion(double startPercentage, double startvalue, int round) {
-        int[] startList = this.getStartAgents(getSize(),startPercentage);
+        int[] startList = NetworkHelper.getStartAgents(getSize(),startPercentage);
         return startDiffusion(startList,startvalue,round);
     }
 
@@ -94,7 +95,7 @@ public class NetworkImpl implements Network {
 
     public MultiDiffusionResult startMultiDiffusion(double percentage, double startvalue, int maxDiffuseRound,int expTimes,boolean reSelect){
         List<DiffusionResult> results = new ArrayList<>();
-        int[] startList = this.getStartAgents(this.getSize(),percentage);
+        int[] startList = NetworkHelper.getStartAgents(this.getSize(),percentage);
         for(int i=0;i<expTimes;i++){
             if(reSelect){
                 results.add(this.startDiffusion(percentage,startvalue,maxDiffuseRound));
@@ -106,38 +107,7 @@ public class NetworkImpl implements Network {
     }
 
     protected MultiDiffusionResult analyzeMultiDiffusionResult(List<DiffusionResult> results ,int maxDiffuseRound,int expTimes){
-        MultiDiffusionResult result = new MultiDiffusionResult(expTimes);
-        result.setAgentCount(getSize());
-        result.setEdgeCount(edgeCount);
-
-        int actualMaxRound = 0;
-        double averageAffectedAgentCount = 0;
-        double[] averageDiffusePerTerm = new double[maxDiffuseRound];
-        int[] agentStatus = new int[getSize()];
-        for(DiffusionResult diffusionResult:results){
-            if(diffusionResult.getDiffusionRound()>actualMaxRound){
-                actualMaxRound = diffusionResult.getDiffusionRound();
-            }
-            averageAffectedAgentCount+=diffusionResult.getAffectedAgentCount();
-            for(int m=0;m<diffusionResult.getDiffusePerTerm().length;m++){
-                averageDiffusePerTerm[m]+=diffusionResult.getDiffusePerTerm()[m];
-            }
-            for(int m=0;m<getSize();m++){
-                if(diffusionResult.getAgentStatus()[m]){
-                    agentStatus[m]++;
-                }
-            }
-        }
-        averageAffectedAgentCount = averageAffectedAgentCount/expTimes;
-        for(int i=0;i<averageDiffusePerTerm.length;i++){
-            averageDiffusePerTerm[i]=averageDiffusePerTerm[i]/expTimes;
-        }
-
-        result.setAgentStatus(agentStatus);
-        result.setAverageAffectedAgentCount(averageAffectedAgentCount);
-        result.setAverageDiffusePerTerm(averageDiffusePerTerm);
-        result.setMaxDiffusionRound(maxDiffuseRound);
-        return result;
+        return NetworkHelper.analyzeMultiDiffusionResult(results,maxDiffuseRound,expTimes);
     }
 
     protected void startFirstRoundDiffusion(int[] startAgents,double startvalue){
@@ -270,23 +240,6 @@ public class NetworkImpl implements Network {
             }
             agent.setAgentDetermineStragy(stragy);
         }
-    }
-
-    //生成随机初始节点
-    private  int[] getStartAgents(int agentNumber, double startPercentage) {
-        int number = (int) Math.floor(agentNumber * startPercentage);
-        int[] result = new int[number];
-        HashSet<Integer> set = new HashSet<Integer>();
-        while (set.size() < number) {
-            int randomNumber = (int) Math.floor(agentNumber * Math.random());
-            set.add(randomNumber);
-        }
-        int count = 0;
-        for (Integer integer : set) {
-            result[count++] = integer;
-        }
-
-        return result;
     }
 
     public int getEdgeCount() {

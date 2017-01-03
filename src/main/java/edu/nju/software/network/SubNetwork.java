@@ -13,4 +13,5 @@ public interface SubNetwork extends  Network {
 
     void diffuseNewRound();
     List<Agent> getActivedNodes();
+    void clear();
 }

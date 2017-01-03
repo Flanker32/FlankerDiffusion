@@ -21,6 +21,18 @@ public class DiffusionResult {
         this.diffusePerTerm = new int[maxDiffusionRound];
     }
 
+    public int getAgentCount() {
+        return agentCount;
+    }
+
+    public int getEdgeCount() {
+        return edgeCount;
+    }
+
+    public int getMaxDiffusionRound() {
+        return maxDiffusionRound;
+    }
+
     public int getDiffusionRound() {
         return diffusionRound;
     }

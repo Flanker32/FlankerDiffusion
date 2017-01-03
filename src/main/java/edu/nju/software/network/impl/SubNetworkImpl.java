@@ -45,7 +45,12 @@ public class SubNetworkImpl extends NetworkImpl implements SubNetwork {
         return activedAgents;
     }
 
-    public void showDiffusionStatus(){
+    @Override
+    public void clear() {
 
+    }
+
+    public void showDiffusionStatus(){
+        super.clear();
     }
 }

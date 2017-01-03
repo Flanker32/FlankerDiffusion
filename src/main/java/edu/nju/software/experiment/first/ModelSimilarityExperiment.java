@@ -1,4 +1,4 @@
-package edu.nju.software.experiment;
+package edu.nju.software.experiment.first;
 
 import edu.nju.software.Util;
 import edu.nju.software.agent.Agent;
@@ -7,7 +7,9 @@ import edu.nju.software.bean.MultiDiffusionResult;
 import edu.nju.software.bean.NetworkParameter;
 import edu.nju.software.network.Network;
 import edu.nju.software.network.NetworkFactory;
+import edu.nju.software.network.NetworkHelper;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -75,39 +77,31 @@ public class ModelSimilarityExperiment {
             }
         }
 
-        Util.showIntList(first);
-        Util.showIntList(second);
-        Util.showIntList(third);
-
-        Util.showIntList(firstSub);
-        Util.showIntList(secondSub);
-        Util.showIntList(thirdSub);
-
-
-        MultiDiffusionResult[] resultList = new MultiDiffusionResult[GROUP_NUMBER];
+        List<MultiDiffusionResult> temp = new ArrayList<>();
         MultiDiffusionResult firstResult = network.startMultiDiffusion(first,startValue,maxRound,expRound);
         System.out.println("Finish 1~");
         MultiDiffusionResult secondResult = network.startMultiDiffusion(second,startValue,maxRound,expRound);
         System.out.println("Finish 2~");
         MultiDiffusionResult thirdResult = network.startMultiDiffusion(third,startValue,maxRound,expRound);
         System.out.println("Finish 3~");
-        resultList[0]=firstResult;
-        resultList[1]=secondResult;
-        resultList[2]=thirdResult;
+        temp.add(firstResult);
+        temp.add(secondResult);
+        temp.add(thirdResult);
 
-        Util.writeMultiDiffusionResultToFile(resultList,"ModelSimilarity_"+name);
+        NetworkHelper.writeMultiDiffusionResultToFile(temp,"ModelSimilarity_"+name);
 
 
+        temp.clear();
         firstResult = network.startMultiDiffusion(firstSub,startValue,maxRound,expRound);
         System.out.println("Finish 4~");
         secondResult = network.startMultiDiffusion(secondSub,startValue,maxRound,expRound);
         System.out.println("Finish 5~");
         thirdResult = network.startMultiDiffusion(thirdSub,startValue,maxRound,expRound);
         System.out.println("Finish 6~");
-        resultList[0]=firstResult;
-        resultList[1]=secondResult;
-        resultList[2]=thirdResult;
+        temp.add(firstResult);
+        temp.add(secondResult);
+        temp.add(thirdResult);
 
-        Util.writeMultiDiffusionResultToFile(resultList,"ModelSimilarityAdvance_"+name);
+        NetworkHelper.writeMultiDiffusionResultToFile(temp,"ModelSimilarityAdvance_"+name);
     }
 }
