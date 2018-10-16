@@ -1,3 +1,4 @@
+mvn clean install
 Remove-Item -Recurse -Force "azure-maven-archetypes" -ErrorAction Ignore
 git clone https://github.com/Microsoft/azure-maven-archetypes.git -b develop
 mvn -f  ".\azure-maven-archetypes\azure-functions-archetype\pom.xml" clean install
